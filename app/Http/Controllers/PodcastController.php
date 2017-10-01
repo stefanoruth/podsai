@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\UpdatePodcast;
+use App\Podcast;
 use Illuminate\Http\Request;
 
 class PodcastController extends Controller
@@ -24,7 +26,15 @@ class PodcastController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'url' => 'required',
+        ]);
+
+        $podcast = Podcast::firstOrNew([
+            'url' => $request->get('url'),
+        ]);
+
+        $this->dispatch(new UpdatePodcast($podcast));
     }
 
     /**

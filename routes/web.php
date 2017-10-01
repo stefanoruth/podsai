@@ -11,12 +11,17 @@
 |
 */
 
-$router->view('/', 'app');
-$router->get('logout', 'AuthController@logout');
+$router->get('/', 'HomeController@index')->name('home');
+
+// Auth
+$router->get('logout', 'AuthController@logout')->middleware('auth')->name('logout');
 $router->get('login/google', 'AuthController@redirectToProvider')->name('login');
 $router->get('login/google/callback', 'AuthController@handleProviderCallback');
 
-$router->get('podcast', function(){
-    return \App\User::with('podcasts', 'episodes')->get();
-    return \App\Podcast::with('episodes.users', 'users')->get();
+
+$router->middleware('auth')->group(function ($router) {
+    $router->resource('podcasts', 'PodcastController')->only('index', 'create', 'show');
+    $router->resource('podcasts/subscriptions', 'PodcastSubscriptionController')->only('index', 'store', 'destroy');
+    $router->resource('episodes', 'EpisodeController')->only('index', 'show');
+    $router->resource('episodes/listeners', 'EpisodeListenerController')->only('store', 'update', 'destroy');
 });

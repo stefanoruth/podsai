@@ -7,11 +7,11 @@ use App\Podcast;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class ImportPodcast extends Command
+class PodcastFetch extends Command
 {
     use DispatchesJobs;
 
-    protected $signature = 'import:podcast {--id=}';
+    protected $signature = 'podcast:fetch {--id=}';
     protected $description = 'Fetch data from all podcasts';
 
     /**
