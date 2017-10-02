@@ -2,13 +2,13 @@
 
 namespace App\Jobs;
 
-use App\Channel\Rss;
 use App\Podcast;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Zttp\Zttp;
 
 class UpdatePodcast implements ShouldQueue
 {
@@ -33,26 +33,25 @@ class UpdatePodcast implements ShouldQueue
      */
     public function handle()
     {
-        $rss = Rss::handle($this->podcast->url);
+        $feed = simplexml_load_string(Zttp::contentType('text/feed')->get($this->podcast->url)->body());
         
-        $this->podcast->fill([
-            'title'       => formatInput($rss->title),
-            'description' => formatInput($rss->description),
-            'logo'        => formatInput($rss->logo),
-            'domain'      => formatInput($rss->domain),
+        $this->podcast->update([
+            'title'       => formatInput((string) $feed->channel->title),
+            'description' => formatInput((string) $feed->channel->description),
+            'logo'        => formatInput((string) $feed->channel->image->url ?? null),
+            'domain'      => formatInput((string) $feed->channel->link),
         ]);
-        $this->podcast->save();
 
-        foreach ($rss->items as $episode) {
+        collect($feed->xpath('//channel//item'))->each(function($item){
             $this->podcast->episodes()->updateOrCreate([
-                'key' => $episode->key,
+                'key' => (string) $item->guid,
             ], [
-                'title'        => formatInput($episode->title),
-                'description'  => formatInput(str_limit($episode->description, 1950)),
-                'link'         => formatInput($episode->link),
-                'audio'        => formatInput($episode->audio),
-                'published_at' => strtotime($episode->published_at),
+                'title'        => formatInput((string) $item->title),
+                'description'  => formatInput(str_limit((string) $item->description, 1950)),
+                'link'         => formatInput((string) $item->link),
+                'audio'        => formatInput((string) $item->enclosure->attributes()['url']),
+                'published_at' => strtotime((string) $item->pubDate),
             ]);
-        }
+        });
     }
 }

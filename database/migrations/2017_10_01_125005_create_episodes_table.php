@@ -19,7 +19,7 @@ class CreateEpisodesTable extends Migration
             $table->string('key');
             $table->string('title');
             $table->string('description', 2000)->nullable();
-            $table->string('link');
+            $table->string('link')->nullable();
             $table->string('audio');
             $table->json('meta')->nullable();
             $table->datetime('published_at')->nullable();

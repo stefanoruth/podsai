@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             'https://rss.simplecast.com/podcasts/351/rss',
             'https://rss.simplecast.com/podcasts/335/rss',
             'http://twentypercent.fm/rss',
+            'http://feeds.feedburner.com/PhpRoundtable',
+            'http://www.dr.dk/mu/Feed/mads-monopolet-podcast.xml?format=podcast&limit=500',
         ];
 
         foreach ($podcasts as $podcast) {
