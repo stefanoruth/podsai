@@ -48,4 +48,15 @@ class Episode extends Model
     {
         return $this->belongsToMany(Episode::class, 'user_episodes');
     }
+
+    public function setMetaAttribute($value)
+    {
+        $filtered = array_filter($value);
+
+        if (count($filtered) == 0) {
+            $this->attributes['meta'] = null;
+        } else {
+            $this->attributes['meta'] = json_encode($filtered);
+        }
+    }
 }
