@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+Vue.component('audio-player', require('./AudioPlayer'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,5 +16,13 @@ window.Vue = require('vue');
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        audioFile: null,
+    },
+    methods: {
+        playEpisode(src) {
+            this.audioFile = src;
+        }
+    },
 });

@@ -46,7 +46,7 @@ class Episode extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(Episode::class, 'user_episodes');
+        return $this->belongsToMany(Episode::class, 'user_episodes')->withTimestamps();
     }
 
     public function setMetaAttribute($value)

@@ -17,6 +17,7 @@ class CreateUserEpisodesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('episode_id')->unsigned();
             $table->integer('time')->unsigned()->default(0);
+            $table->datetime('completed_at')->default(null);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

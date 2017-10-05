@@ -28,6 +28,6 @@ class Podcast extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_podcasts');
+        return $this->belongsToMany(User::class, 'user_podcasts')->withTimestamps();
     }
 }

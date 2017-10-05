@@ -19,12 +19,17 @@ class PodcastSubscriptionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $this->validate(request(), [
+            'podcast_id' => 'required',
+        ]);
+
+        auth()->user()->podcasts()->sync(request('podcast_id'), false);
+
+        return redirect()->back();
     }
 
     /**
@@ -35,6 +40,8 @@ class PodcastSubscriptionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        auth()->user()->podcasts()->detach($id);
+
+        return redirect()->back();
     }
 }

@@ -31,7 +31,7 @@ class User extends Authenticatable
      */
     public function podcasts()
     {
-        return $this->belongsToMany(Podcast::class, 'user_podcasts');
+        return $this->belongsToMany(Podcast::class, 'user_podcasts')->withTimestamps();
     }
 
     /**
@@ -40,6 +40,19 @@ class User extends Authenticatable
      */
     public function episodes()
     {
-        return $this->belongsToMany(Episode::class, 'user_episodes');
+        return $this->belongsToMany(Episode::class, 'user_episodes')->withTimestamps();
+    }
+
+    public function isSubscribed(Podcast $podcast)
+    {
+        return $this->podcasts()->where('podcast_id', $podcast->id)->exists();
+    }
+
+    public function latestsEpisodes($count = 10)
+    {
+        return Episode::with('podcast')
+            ->whereIn('podcast_id', $this->podcasts()->pluck('id'))
+            ->orderBy('published_at', 'DESC')
+            ->take($count)->get();
     }
 }

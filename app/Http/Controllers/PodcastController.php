@@ -30,11 +30,13 @@ class PodcastController extends Controller
             'url' => 'required',
         ]);
 
-        $podcast = Podcast::firstOrNew([
+        $podcast = Podcast::firstOrCreate([
             'url' => $request->get('url'),
         ]);
 
         $this->dispatch(new UpdatePodcast($podcast));
+
+        return redirect()->back();
     }
 
     /**

@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+    font-family: 'Quicksand', sans-serif;
+    background-color: #ebf3fa;
+}
+
+input {
+    font-family: 'Quicksand', sans-serif;
+}
+
+img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+#app {
+    height: 100%;
+}
+
+.header {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid #dee0df;
+    background-color: #fff;
+
+    .logo {
+        height: 100%;
+    }
+
+    .search {
+        flex: 1;
+        padding: 0 15px;
+        display: flex;
+
+        input {
+            height: 100%;
+            border: none;
+            display: inline-block;
+            flex: 1;
+            outline: 0;
+        }
+    }
+
+    .user {
+        padding: 0 15px;
+    }
+}
+
+main {
+    display: flex;
+    padding: 20px 40px;
+}
+
+.tiles {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(auto-fill, 200px);
+    flex: 1;
+}
+
+.sidebar {
+    flex-basis: 400px;
+}

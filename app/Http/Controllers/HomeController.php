@@ -13,6 +13,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // $this->dispatch(new \App\Jobs\UpdatePodcast(\App\Podcast::where('title', 'LIKE', '%Percent%')->firstOrFail()));
+        \Auth::loginUsingId(1);
         return view('app');
     }
 }
