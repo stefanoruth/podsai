@@ -19,22 +19,24 @@
             <div class="user">{{ auth()->user()->name ?? 'Guest' }}</div>
         </div>
         <main>
-            <div class="tiles">
-                
-            </div>
-            <div class="sidebar">
-                <div>
-                    @foreach(auth()->user()->latestsEpisodes() as $episode)
-                        <div @click="playEpisode('{{ $episode->audio }}')">
-                            <img src="{{ $episode->podcast->logo }}" width="50" style="float:left">
-                            <div>
-                                <p><strong>{{ $episode->title }}</strong></p>
-                                <p>{{ $episode->podcast->title }}</p>
-                            </div>
-                        </div>
-                    @endforeach
+            @auth
+                <div class="tiles">
+                    
                 </div>
-            </div>
+                <div class="sidebar">
+                    <div>
+                        @foreach(auth()->user()->latestsEpisodes() as $episode)
+                            <div @click="playEpisode('{{ $episode->audio }}')">
+                                <img src="{{ $episode->podcast->logo }}" width="50" style="float:left">
+                                <div>
+                                    <p><strong>{{ $episode->title }}</strong></p>
+                                    <p>{{ $episode->podcast->title }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endauth
         </main>
         <audio-player :file="audioFile"></audio-player>
     </div>
