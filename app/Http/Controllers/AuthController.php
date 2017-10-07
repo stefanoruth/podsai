@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
@@ -20,6 +23,7 @@ class AuthController extends Controller
     |
     */
 
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     use AuthenticatesUsers;
 
     /**

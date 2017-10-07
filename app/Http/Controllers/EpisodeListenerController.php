@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class EpisodeListenerController extends Controller
+class EpisodeListenerController
 {
     /**
      * Store a newly created resource in storage.

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PodcastSubscriptionController extends Controller
+class PodcastSubscriptionController
 {
     /**
      * Display a listing of the resource.

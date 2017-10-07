@@ -6,7 +6,7 @@ use App\Jobs\UpdatePodcast;
 use App\Podcast;
 use Illuminate\Http\Request;
 
-class PodcastController extends Controller
+class PodcastController
 {
     /**
      * Display a listing of the resource.
