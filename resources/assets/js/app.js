@@ -8,6 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 Vue.component('audio-player', require('./AudioPlayer'));
+Vue.component('search-field', require('./Search'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

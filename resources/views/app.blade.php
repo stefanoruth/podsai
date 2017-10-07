@@ -10,16 +10,12 @@
 </head>
 <body>
     <div id="app">
+        <div class="header-border"></div>
         <div class="header">
             <div class="logo">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo">
             </div>
-            <div class="search">
-                <input type="text" placeholder="Search">
-            </div>
-            <div class="player">
-                <audio-player :file="audioFile"></audio-player>
-            </div>
+            <search-field></search-field>
             <div class="user">{{ auth()->user()->name ?? 'Guest' }}</div>
         </div>
         <main>
@@ -27,15 +23,20 @@
                 
             </div>
             <div class="sidebar">
-                @auth
-                    <ul>
-                        @foreach(auth()->user()->latestsEpisodes() as $episode)
-                            <li @click="playEpisode('{{ $episode->audio }}')" style="margin-bottom: 5px;" data-audio="{{ $episode->audio }}"><strong>{{ $episode->podcast->title }}</strong> - {{ $episode->title }} - {{ $episode->published_at->format('d/m-Y H:i:s') }}</li>
-                        @endforeach
-                    </ul>
-                @endauth
+                <div>
+                    @foreach(auth()->user()->latestsEpisodes() as $episode)
+                        <div @click="playEpisode('{{ $episode->audio }}')">
+                            <img src="{{ $episode->podcast->logo }}" width="50" style="float:left">
+                            <div>
+                                <p><strong>{{ $episode->title }}</strong></p>
+                                <p>{{ $episode->podcast->title }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </main>
+        <audio-player :file="audioFile"></audio-player>
     </div>
     <script src="{{ mix('app.js') }}"></script>
 </body>
