@@ -40,7 +40,10 @@ class User extends Authenticatable
      */
     public function episodes()
     {
-        return $this->belongsToMany(Episode::class, 'user_episodes')->withTimestamps();
+        return $this->belongsToMany(Episode::class, 'user_episodes')
+                    ->withTimestamps()
+                    ->withPivot('time', 'completed_at')
+                    ->as('listen');
     }
 
     public function isSubscribed(Podcast $podcast)

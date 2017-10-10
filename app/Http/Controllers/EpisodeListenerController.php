@@ -2,31 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Episode;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class EpisodeListenerController
 {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        request()->validate([
+            'id' => [
+                'required',
+                'exists:episodes,id',
+            ],
+        ]);
+
+        $episode = Episode::findOrFail(request('id'));
+
+        return Auth::user()->episodes()->save($episode);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        return Auth::user()->episodes()->save(Episode::findOrFail($id), ['time' => request('time')]);
     }
 
     /**
@@ -37,6 +46,6 @@ class EpisodeListenerController
      */
     public function destroy($id)
     {
-        //
+        Auth::user()->episodes()->where('id', $id)->delete();
     }
 }
