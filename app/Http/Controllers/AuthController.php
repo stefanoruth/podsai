@@ -26,18 +26,17 @@ class AuthController
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('google')->user();
+        $socialiteUser = Socialite::driver('google')->user();
 
-        // dd($user);
-
-        $auth = User::updateOrCreate([
-            'email' => $user->email,
+        $user = User::updateOrCreate([
+            'email' => $socialiteUser->getEmail(),
         ], [
-            'name' => $user->name,
-            'google_token' => $user->token,
+            'name' => $socialiteUser->getName(),
+            'token' => $socialiteUser->token,
         ]);
 
-        auth()->login($auth);
+        // Remeber login
+        Auth::login($user, true);
 
         return redirect('/');
     }

@@ -35,7 +35,7 @@ class EpisodeListenerController
      */
     public function update($id)
     {
-        return Auth::user()->episodes()->save(Episode::findOrFail($id), ['time' => request('time')]);
+        return Auth::user()->episodes()->updateExistingPivot(request('id'), ['time' => request('time')]);
     }
 
     /**

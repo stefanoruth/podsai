@@ -14,7 +14,7 @@ class HomeController
     public function index()
     {
         // $this->dispatch(new \App\Jobs\UpdatePodcast(\App\Podcast::where('title', 'LIKE', '%Percent%')->firstOrFail()));
-        \Auth::loginUsingId(1);
+        // \Auth::loginUsingId(1);
         return view('app');
     }
 }

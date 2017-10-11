@@ -12,9 +12,6 @@
     <div id="app">
         <div class="header-border"></div>
         <div class="header">
-            <div class="logo">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo">
-            </div>
             <search-field></search-field>
             <div class="user">{{ auth()->user()->name ?? 'Guest' }}</div>
         </div>

@@ -44,11 +44,15 @@ class Episode extends Model
      * Relationship
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
+    public function listens()
     {
-        return $this->belongsToMany(Episode::class, 'user_episodes')->withTimestamps();
+        return $this->hasMany(Listen::class);
     }
 
+    /**
+     * Filter empty values off the data.
+     * @param array $value
+     */
     public function setMetaAttribute($value)
     {
         $filtered = array_filter($value);

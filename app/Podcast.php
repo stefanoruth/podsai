@@ -14,6 +14,15 @@ class Podcast extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'meta' => 'json',
+    ];
+
+    /**
      * Relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -29,5 +38,10 @@ class Podcast extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_podcasts')->withTimestamps();
+    }
+
+    public function getLogoAttribute($value)
+    {
+        return url("storage/logos/{$value}");
     }
 }

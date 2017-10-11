@@ -38,19 +38,26 @@ class User extends Authenticatable
      * Relationship
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function episodes()
+    public function listens()
     {
-        return $this->belongsToMany(Episode::class, 'user_episodes')
-                    ->withTimestamps()
-                    ->withPivot('time', 'completed_at')
-                    ->as('listen');
+        return $this->hasMany(Listen::class, 'user_episodes');
     }
 
+    /**
+     * Checks if the user is subscribe to a specefic podcast.
+     * @param  Podcast $podcast
+     * @return boolean
+     */
     public function isSubscribed(Podcast $podcast)
     {
         return $this->podcasts()->where('podcast_id', $podcast->id)->exists();
     }
 
+    /**
+     * Fetches the latest podcast episodes for a user.
+     * @param  integer $count
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function latestsEpisodes($count = 10)
     {
         return Episode::with('podcast')

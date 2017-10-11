@@ -17,9 +17,8 @@ class CreatePodcastsTable extends Migration
             $table->increments('id');
             $table->string('url')->unique();
             $table->string('title')->nullable();
-            $table->string('description', 500)->nullable();
-            $table->string('domain')->nullable();
             $table->string('logo')->nullable();
+            $table->json('meta')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

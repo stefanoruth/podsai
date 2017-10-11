@@ -15,7 +15,7 @@ $router->get('/', 'HomeController@index')->name('home');
 
 // Auth
 $router->get('logout', 'AuthController@logout')->middleware('auth')->name('logout');
-$router->get('login/google', 'AuthController@redirectToProvider')->name('login');
+$router->get('login', 'AuthController@redirectToProvider')->name('login');
 $router->get('login/google/callback', 'AuthController@handleProviderCallback');
 
 
