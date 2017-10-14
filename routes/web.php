@@ -17,11 +17,3 @@ $router->get('/', 'HomeController@index')->name('home');
 $router->get('logout', 'AuthController@logout')->middleware('auth')->name('logout');
 $router->get('login', 'AuthController@redirectToProvider')->name('login');
 $router->get('login/google/callback', 'AuthController@handleProviderCallback');
-
-
-$router->middleware('auth')->group(function ($router) {
-    $router->resource('podcasts', 'PodcastController')->only('index', 'store', 'show');
-    $router->resource('podcasts/subscriptions', 'PodcastSubscriptionController')->only('index', 'store', 'destroy');
-    $router->resource('episodes', 'EpisodeController')->only('show');
-    $router->resource('episodes/listeners', 'EpisodeListenerController')->only('store', 'update', 'destroy');
-});

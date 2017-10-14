@@ -6,7 +6,12 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+window.Vue = Vue;
+
+Vue.use(VueRouter);
+Vue.config.productionTip = false
 Vue.component('audio-player', require('./AudioPlayer'));
 Vue.component('search-field', require('./Search'));
 
@@ -18,9 +23,17 @@ Vue.component('search-field', require('./Search'));
 
 const app = new Vue({
     el: '#app',
+    router: new VueRouter({
+        routes: [
+            {path:'/', component: require('./Home')},
+            {path:'/podcasts', component: require('./PodcastList')},
+        ],
+    }),
+
     data: {
         audioFile: null,
     },
+
     methods: {
         playEpisode(src) {
             this.audioFile = src;

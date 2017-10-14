@@ -16,6 +16,7 @@
             <div class="user">{{ auth()->user()->name ?? 'Guest' }}</div>
         </div>
         <main>
+            <router-view></router-view>
             @auth
                 <div class="tiles">
                     
@@ -37,6 +38,8 @@
         </main>
         <audio-player :file="audioFile"></audio-player>
     </div>
+
+    @routes
     <script src="{{ mix('app.js') }}"></script>
 </body>
 </html>
