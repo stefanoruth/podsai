@@ -53,6 +53,6 @@ class AuthController
 
         $request->session()->invalidate();
 
-        return redirect('/');
+        return redirect('/welcome');
     }
 }

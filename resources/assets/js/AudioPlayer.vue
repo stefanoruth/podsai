@@ -1,5 +1,5 @@
 <template>
-    <div class="player" v-show="file != null">
+    <div class="player" v-show="episode.audio != null">
         <div class="bar" v-on:mousemove="showTime" v-on:mouseleave="hideTime" @click="setTime">
             <span class="progress" :style="{width: barDuration}"></span>
             <span class="tooltip" :style="{left: tooltipOffset}" v-show="tooltip != null">{{ tooltip }}</span>
@@ -8,7 +8,7 @@
             <button @click="togglePlay()">{{ isPlaying ? 'Pause' : 'Play' }}</button>
             <span>{{ humanTime }} / {{ humanLength }}</span>
         
-            <audio id="audio-player" autoplay="" :src="file" style="display:none;"></audio>
+            <audio id="audio-player" autoplay="" :src="episode.audio" style="display:none;"></audio>
         </div>
     </div>
 </template>
@@ -18,10 +18,20 @@
 
     export default {
         props: {
-            file: {
+            episodeId: {
                 type: String,
                 default: null,
             }
+        },
+
+        watch: {
+            episodeId: function(newId) {
+                if (newId == null) {
+                    this.episode = null;
+                } else {
+                    this.loadEpisode(newVal);
+                }
+            },
         },
 
         computed: {
@@ -46,23 +56,15 @@
                 durationPercentage: '0%',
                 tooltip: null,
                 tooltipOffset: '-10px',
+                episode: {
+                    audio: null,
+                },
             };
         },
 
         mounted() {
             this.player = document.getElementById('audio-player');
-            this.player.addEventListener('play', () => {
-                this.isPlaying = true;
-            });
-            this.player.addEventListener('pause', () => {
-                this.isPlaying = false;
-            });
-            this.player.addEventListener('timeupdate', () => {
-                this.duration = this.player.currentTime;
-            });
-            this.player.addEventListener('loadeddata', () => {
-                this.length = parseInt(this.player.duration);
-            });
+            this.init();
         },
 
         methods: {
@@ -78,6 +80,26 @@
                 }
             },
 
+            loadEpisode(id) {
+                axios.get(route('listens.show', id)).then((response) => {
+                    console.log(response);
+                    this.player.currentTime = (response.data.data.duration - 3); // Remove 3 sec for user to remeber where they left off.
+                    this.episode = response.data.data.episode;
+                }).catch((error) => {
+                    if (error.response.status != 404) {
+                        throw error;
+                    }
+
+                    axios.post(route('listens.store'), {id: id}).then((response) => {
+                        this.episode = response.data.data;
+                    });
+                });
+            },
+
+            updateTime() {
+                axios.put(route('listens.update', this.episode.id), {time: this.duration});
+            },
+
             formatTime(seconds) {
                 let duration = moment.duration(parseInt(seconds), 'seconds');
                 return _.padStart(Math.floor(duration.asMinutes()), 2, 0)+moment.utc(duration.asMilliseconds()).format(":ss", { trim: false });
@@ -91,12 +113,26 @@
                 let seconds = this.length / _.find(event.path, (item) => {return item.className == 'bar';}).offsetWidth * event.layerX;
                 this.tooltip = this.formatTime(seconds);
                 this.tooltipOffset = (event.layerX - 24)+'px';
-                // this.player.currentTime = seconds;
-                // console.log(pos, width, this.length);
             },
 
             hideTime(event) {
                 this.tooltip = null;
+            },
+
+            init() {
+                this.player.addEventListener('play', () => {
+                    this.isPlaying = true;
+                });
+                this.player.addEventListener('pause', () => {
+                    this.isPlaying = false;
+                    this.updateTime();
+                });
+                this.player.addEventListener('timeupdate', () => {
+                    this.duration = this.player.currentTime;
+                });
+                this.player.addEventListener('loadeddata', () => {
+                    this.length = parseInt(this.player.duration);
+                });
             },
         },
     }

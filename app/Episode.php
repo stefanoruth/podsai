@@ -28,7 +28,7 @@ class Episode extends Model
      * @var array
      */
     protected $casts = [
-        'meta' => 'json',
+        'meta' => 'object',
     ];
 
     /**
@@ -47,6 +47,16 @@ class Episode extends Model
     public function listens()
     {
         return $this->hasMany(Listen::class);
+    }
+
+    /** 
+     * Sort episodes by newest first
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSortLatest($query)
+    {
+        return $query->orderBy('published_at', 'DESC');
     }
 
     /**

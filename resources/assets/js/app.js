@@ -31,12 +31,12 @@ const app = new Vue({
     }),
 
     data: {
-        audioFile: null,
+        episode: null,
     },
 
     methods: {
-        playEpisode(src) {
-            this.audioFile = src;
+        playEpisode(id) {
+            this.episode = id;
         }
     },
 });

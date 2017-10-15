@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PodcastResource;
 use App\Jobs\UpdatePodcast;
 use App\Podcast;
 use Illuminate\Http\Request;
@@ -15,7 +16,9 @@ class PodcastController
      */
     public function index()
     {
-        //
+        return PodcastResource::collection(Podcast::with(['episodes' => function($query){
+            $query->sortLatest();
+        }])->get());
     }
 
     /**
@@ -47,6 +50,8 @@ class PodcastController
      */
     public function show($id)
     {
-        //
+        return PodcastResource::make(Podcast::with(['episodes' => function($query){
+            $query->sortLatest();
+        }])->findOrFail($id));
     }
 }

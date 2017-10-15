@@ -92,8 +92,8 @@ class UpdatePodcast implements ShouldQueue
             'audio'        => formatInput((string) $item->enclosure->attributes()['url']),
             'published_at' => strtotime((string) $item->pubDate),
             'meta'         => [
-                'season' => formatInput((string) $itunes->season),
-                'number' => formatInput((string) $itunes->episode),
+                'season'       => formatInput((string) $itunes->season),
+                'number'       => formatInput((string) $itunes->episode),
                 'link'         => formatInput((string) $item->link),
                 'description'  => formatInput((string) $item->description),
             ],

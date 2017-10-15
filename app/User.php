@@ -36,11 +36,11 @@ class User extends Authenticatable
 
     /**
      * Relationship
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function listens()
     {
-        return $this->hasMany(Listen::class, 'user_episodes');
+        return $this->hasMany(Listen::class);
     }
 
     /**
