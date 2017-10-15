@@ -54,11 +54,17 @@ class ListenController
      */
     public function update($id)
     {
-        request()->validate([
-            'time' => 'required',
-        ]);
+        if (request('complete')) {
+            $update = ['completed_at' => time(), 'time' => 0];
+        } else {
+            request()->validate([
+                'time' => 'required',
+            ]);
+            
+            $update = ['time' => request('time')];
+        }
 
-        Auth::user()->listens()->where('episode_id', $id)->update(['time' => request('time')]);
+        Auth::user()->listens()->updateOrCreate(['episode_id' => $id], $update);
     }
 
     /**

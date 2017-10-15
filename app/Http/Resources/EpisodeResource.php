@@ -24,6 +24,7 @@ class EpisodeResource extends Resource
             'season'       => $this->transform(data_get($this->meta, 'season'), function($value){return (int) $value;}),
             'episode'      => $this->transform(data_get($this->meta, 'episode'), function($value){return (int) $value;}),
             'podcast'      => PodcastResource::make($this->whenLoaded('podcast')),
+            'listen'       => ListenResource::make($this->whenLoaded('listen')),
         ];
     }
 }

@@ -7,6 +7,7 @@
         <div>
             <button @click="togglePlay()">{{ isPlaying ? 'Pause' : 'Play' }}</button>
             <span>{{ humanTime }} / {{ humanLength }}</span>
+            <button @click="close()">Close</button>
         
             <audio id="audio-player" autoplay="" :src="episode.audio" style="display:none;"></audio>
         </div>
@@ -29,7 +30,7 @@
                 if (newId == null) {
                     this.episode = null;
                 } else {
-                    this.loadEpisode(newVal);
+                    this.loadEpisode(newId);
                 }
             },
         },
@@ -100,6 +101,10 @@
                 axios.put(route('listens.update', this.episode.id), {time: this.duration});
             },
 
+            completeEpisode() {
+                axios.put(route('listens.update', this.episode.id), {complete: true});
+            },
+
             formatTime(seconds) {
                 let duration = moment.duration(parseInt(seconds), 'seconds');
                 return _.padStart(Math.floor(duration.asMinutes()), 2, 0)+moment.utc(duration.asMilliseconds()).format(":ss", { trim: false });
@@ -113,6 +118,11 @@
                 let seconds = this.length / _.find(event.path, (item) => {return item.className == 'bar';}).offsetWidth * event.layerX;
                 this.tooltip = this.formatTime(seconds);
                 this.tooltipOffset = (event.layerX - 24)+'px';
+            },
+
+            close() {
+                this.player.pause();
+                this.episode.audio = null;
             },
 
             hideTime(event) {
@@ -132,6 +142,13 @@
                 });
                 this.player.addEventListener('loadeddata', () => {
                     this.length = parseInt(this.player.duration);
+                });
+                this.player.addEventListener('ended', () => {
+                    this.isPlaying = false;
+                    this.completeEpisode();
+                });
+                window.addEventListener('beforeunload', () => {
+                    this.updateTime();
                 });
             },
         },

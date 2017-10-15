@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Episode extends Model
 {
@@ -47,6 +48,15 @@ class Episode extends Model
     public function listens()
     {
         return $this->hasMany(Listen::class);
+    }
+
+    /** 
+     * Relationship
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function listen()
+    {
+        return $this->hasOne(Listen::class)->where('user_id', Auth::id());
     }
 
     /** 
