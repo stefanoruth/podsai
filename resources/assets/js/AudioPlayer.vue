@@ -5,10 +5,15 @@
             <span class="tooltip" :style="{left: tooltipOffset}" v-show="tooltip != null">{{ tooltip }}</span>
         </div>
         <div>
-            <button @click="togglePlay()">{{ isPlaying ? 'Pause' : 'Play' }}</button>
+            
+            <img style="float:left;" v-if="episode.audio != null" :src="episode.podcast.logo">
+            <div>
+                <button @click="togglePlay()">{{ isPlaying ? 'Pause' : 'Play' }}</button>
             <span>{{ humanTime }} / {{ humanLength }}</span>
             <button @click="close()">Close</button>
-        
+            <p>{{ episode.title }}</p>
+            </div>
+
             <audio id="audio-player" autoplay="" :src="episode.audio" style="display:none;"></audio>
         </div>
     </div>
@@ -83,7 +88,6 @@
 
             loadEpisode(id) {
                 axios.get(route('listens.show', id)).then((response) => {
-                    console.log(response);
                     this.player.currentTime = (response.data.data.duration - 3); // Remove 3 sec for user to remeber where they left off.
                     this.episode = response.data.data.episode;
                 }).catch((error) => {
@@ -123,6 +127,7 @@
             close() {
                 this.player.pause();
                 this.episode.audio = null;
+                this.episodeId = null;
             },
 
             hideTime(event) {
@@ -162,6 +167,7 @@
         background-color: #fff;
         height: 81px;
         border-top: 1px solid #dee0df;
+        overflow-y: hidden;
     }
 
     .bar {

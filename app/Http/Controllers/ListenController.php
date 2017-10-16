@@ -29,7 +29,7 @@ class ListenController
         ]);
 
         return EpisodeResource::make(
-            Episode::findOrFail(request('id'))
+            Episode::with('podcast')->findOrFail(request('id'))
         );
     }
 
@@ -42,7 +42,7 @@ class ListenController
     public function show($id)
     {
         return ListenResource::make(
-            Auth::user()->listens()->with('episode')->where('episode_id', $id)->firstOrFail()
+            Auth::user()->listens()->with('episode.podcast')->where('episode_id', $id)->firstOrFail()
         );
     }
 
