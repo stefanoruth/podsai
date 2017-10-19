@@ -17,7 +17,7 @@
                     <div>
                         @foreach(auth()->user()->latestsEpisodes() as $episode)
                             <div @click="playEpisode('{{ $episode->id }}')">
-                                <img src="{{ $episode->podcast->logo }}" width="50" style="float:left">
+                                <img src="{{ $episode->podcast->logo() }}" width="50" style="float:left">
                                 <div>
                                     <p><strong>{{ $episode->title }}</strong></p>
                                     <p>{{ $episode->podcast->title }}</p>

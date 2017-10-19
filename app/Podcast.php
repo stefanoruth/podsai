@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Podcast extends Model
 {
+    use Searchable;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -40,8 +43,26 @@ class Podcast extends Model
         return $this->belongsToMany(User::class, 'user_podcasts')->withTimestamps();
     }
 
-    public function getLogoAttribute($value)
+    /** 
+     * Logo url path
+     * @return string
+     */
+    public function logo()
     {
-        return url("storage/logos/{$value}");
+        return url("storage/logos/{$this->logo}");
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            'title'       => $this->title,
+            'domain'      => $this->meta->domain,
+            'description' => $this->meta->description,
+        ];
     }
 }
