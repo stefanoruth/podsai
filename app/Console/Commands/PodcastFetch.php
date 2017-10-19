@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Episode;
 use App\Jobs\UpdatePodcast;
 use App\Podcast;
 use Illuminate\Console\Command;
@@ -35,6 +36,9 @@ class PodcastFetch extends Command
         });
 
         $this->bar->finish();
-        $this->line("\nDuration: ".number_format(microtime(true)-$start, 2).' sec');
+        $time = number_format(microtime(true)-$start, 2);
+        $newItems = Episode::where('created_at', '>', now()->subSeconds($time+10))->count();
+        $this->line("\nNew: {$newItems}");
+        $this->line("\nDuration: {$time} sec");
     }
 }
