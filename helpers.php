@@ -8,6 +8,10 @@ if (!function_exists('formatInput')) {
      */
     function formatInput($value)
     {
+        if ($value instanceof \SimpleXMLElement) {
+            $value = (string) $value;
+        }
+        
         if (strlen(trim($value)) > 0) {
             return trim($value);
         }

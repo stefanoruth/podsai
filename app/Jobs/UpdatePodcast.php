@@ -35,7 +35,7 @@ class UpdatePodcast implements ShouldQueue
      */
     public function handle()
     {
-        $feed = simplexml_load_string(Zttp::contentType('text/feed')->get($this->podcast->url)->body());
+        $feed = simplexml_load_string(Zttp::contentType('text/xml')->get($this->podcast->url)->body());
         
         $this->updatePodcast($feed);
 
@@ -53,19 +53,19 @@ class UpdatePodcast implements ShouldQueue
     {
         $itunes = $feed->channel->children('http://www.itunes.com/dtds/podcast-1.0.dtd');
 
-        $title = formatInput((string) $feed->channel->title);
-        $avatar = formatInput((string) $itunes->image->attributes()['href'] ?? $feed->channel->image->url);
+        $title = formatInput($feed->channel->title);
+        $avatar = formatInput($itunes->image->attributes()['href'] ?? $feed->channel->image->url);
 
         $filename = Str::slug($title);
         $extension = pathinfo($avatar, PATHINFO_EXTENSION);
 
         $this->podcast->update([
             'title' => $title,
-            'logo' => "{$filename}.{$extension}",
+            'logo'  => "{$filename}.{$extension}",
             'meta'  => [
-                'description' => formatInput((string) $feed->channel->description),
-                'avatar'        => $avatar,
-                'domain'      => formatInput((string) $feed->channel->link),
+                'description' => formatInput($feed->channel->description),
+                'avatar'      => $avatar,
+                'domain'      => formatInput($feed->channel->link),
             ],
         ]);
 
@@ -86,16 +86,16 @@ class UpdatePodcast implements ShouldQueue
         $itunes = $item->children('http://www.itunes.com/dtds/podcast-1.0.dtd');
 
         $this->podcast->episodes()->updateOrCreate([
-            'key' => (string) $item->guid,
+            'key' => formatInput($item->guid),
         ], [
-            'title'        => formatInput((string) $item->title),
-            'audio'        => formatInput((string) $item->enclosure->attributes()['url']),
-            'published_at' => strtotime((string) $item->pubDate),
+            'title'        => formatInput($item->title),
+            'audio'        => formatInput($item->enclosure->attributes()['url']),
+            'published_at' => strtotime($item->pubDate),
             'meta'         => [
-                'season'       => formatInput((string) $itunes->season),
-                'number'       => formatInput((string) $itunes->episode),
-                'link'         => formatInput((string) $item->link),
-                'description'  => formatInput((string) $item->description),
+                'season'       => formatInput($itunes->season),
+                'number'       => formatInput($itunes->episode),
+                'link'         => formatInput($item->link),
+                'description'  => formatInput($item->description),
             ],
         ]);
     }
