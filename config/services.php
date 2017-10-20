@@ -36,9 +36,8 @@ return [
     ],
 
     'google' => [
-        'client_id' => '56147497221-q27tus72gj4f6dov6vkdqr0cl0roegdd.apps.googleusercontent.com',
-        'client_secret' => 'VuQpaKar29XHyeS7o2cLLQmk',
-        'redirect' => 'http://podcasts.dev/login/google/callback',
+        'client_id' => env('GOOGLE_ID'),
+        'client_secret' => env('GOOGLE_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT'),
     ],
-
 ];
