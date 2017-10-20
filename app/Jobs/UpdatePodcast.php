@@ -39,7 +39,7 @@ class UpdatePodcast implements ShouldQueue
         
         $this->updatePodcast($feed);
 
-        collect($feed->xpath('//channel//item'))->each(function($item){
+        collect($feed->xpath('/rss/channel/item'))->each(function($item){
             $this->updateEpisode($item);
         });
     }
