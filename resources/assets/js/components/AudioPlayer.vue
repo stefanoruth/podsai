@@ -25,7 +25,7 @@
     export default {
         props: {
             episodeId: {
-                type: String,
+                type: ['String', 'Number'],
                 default: null,
             }
         },

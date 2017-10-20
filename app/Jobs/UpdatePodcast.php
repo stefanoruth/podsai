@@ -72,7 +72,7 @@ class UpdatePodcast implements ShouldQueue
         $file = storage_path("app/public/logos/{$filename}.{$extension}");
 
         if (!file_exists($file)) {
-            Image::make($avatar)->fit(50, 50)->save($file);
+            Image::make($avatar)->fit(128, 128)->save($file);
         }
     }
 
@@ -92,10 +92,20 @@ class UpdatePodcast implements ShouldQueue
             'audio'        => formatInput($item->enclosure->attributes()['url']),
             'published_at' => strtotime($item->pubDate),
             'meta'         => [
-                'season'       => formatInput($itunes->season),
-                'number'       => formatInput($itunes->episode),
-                'link'         => formatInput($item->link),
-                'description'  => formatInput($item->description),
+                'length'      => value(function() use ($itunes){
+                    $duration = formatInput($itunes->duration);
+
+                    if (strpos($duration, ':') === false) {
+                        return gmdate('H:i:s', $duration);
+                    }
+
+                    return $duration;
+                }),
+                'season'      => formatInput($itunes->season),
+                'number'      => formatInput($itunes->episode),
+                'link'        => formatInput($item->link),
+                'description' => formatInput($item->description),
+                'show_notes'  => formatInput($item->children('http://purl.org/rss/1.0/modules/content/')->encoded),
             ],
         ]);
     }

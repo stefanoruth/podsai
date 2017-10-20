@@ -14,6 +14,7 @@ Vue.use(VueRouter);
 Vue.config.productionTip = false
 Vue.component('audio-player', require('./components/AudioPlayer'));
 Vue.component('search-field', require('./components/Search'));
+Vue.component('navbar', require('./components/Menu'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -26,7 +27,8 @@ const app = new Vue({
     router: new VueRouter({
         routes: [
             {path:'/', component: require('./views/Home')},
-            {path:'/podcasts', component: require('./views/PodcastList')},
+            {path:'/podcasts/:id', name:'podcastShow', component: require('./views/PodcastShow'), props: true},
+            {path:'/podcasts/:id/episodes/:number', name:'episodeShow', component: require('./views/EpisodeShow'), props: true},
         ],
     }),
 
