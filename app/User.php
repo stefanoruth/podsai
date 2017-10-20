@@ -38,9 +38,9 @@ class User extends Authenticatable
      * Relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function listens()
+    public function episodeCompletions()
     {
-        return $this->hasMany(Listen::class);
+        return $this->hasMany(EpisodeCompletion::class);
     }
 
     /**

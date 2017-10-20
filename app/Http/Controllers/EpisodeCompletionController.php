@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Episode;
-use App\Http\Resources\EpisodeResource;
+use App\Http\Resources\EpisodeCompletionResource;
 use App\Http\Resources\ListenResource;
 use Illuminate\Support\Facades\Auth;
 
-class ListenController
+class EpisodeCompletionController
 {
     /**
      * Store a newly created resource in storage.
@@ -41,8 +41,8 @@ class ListenController
      */
     public function show($id)
     {
-        return ListenResource::make(
-            Auth::user()->listens()->with('episode.podcast')->where('episode_id', $id)->firstOrFail()
+        return EpisodeCompletionResource::make(
+            Auth::user()->episodeCompletions()->with('episode.podcast')->where('episode_id', $id)->firstOrFail()
         );
     }
 

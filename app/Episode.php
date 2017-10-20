@@ -48,18 +48,18 @@ class Episode extends Model
      * Relationship
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function listens()
+    public function userCompletions()
     {
-        return $this->hasMany(Listen::class);
+        return $this->hasMany(EpisodeCompletion::class);
     }
 
     /** 
      * Relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function listen()
+    public function userCompletion()
     {
-        return $this->hasOne(Listen::class)->where('user_id', Auth::id());
+        return $this->hasOne(EpisodeCompletion::class)->where('user_id', Auth::id());
     }
 
     /** 

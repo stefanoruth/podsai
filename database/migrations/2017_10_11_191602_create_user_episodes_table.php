@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateListensTable extends Migration
+class CreateUserEpisodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateListensTable extends Migration
      */
     public function up()
     {
-        Schema::create('listens', function (Blueprint $table) {
+        Schema::create('user_episodes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('episode_id')->unsigned();
@@ -34,6 +34,6 @@ class CreateListensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('listens');
+        Schema::dropIfExists('user_episodes');
     }
 }

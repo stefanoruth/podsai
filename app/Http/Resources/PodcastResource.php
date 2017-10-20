@@ -15,11 +15,12 @@ class PodcastResource extends Resource
     public function toArray($request)
     {
         return [
-            'id'          => $this->id,
-            'title'       => $this->title,
-            'logo'        => $this->logo,
-            'description' => $this->meta->description,
-            'episodes'    => EpisodeResource::collection($this->whenLoaded('episodes')),
+            'id'             => $this->id,
+            'title'          => $this->title,
+            'logo'           => $this->logo(),
+            'description'    => $this->meta->description,
+            'episodes_count' => $this->when(isset($this->episodes_count), $this->episodes_count),
+            'episodes'       => EpisodeResource::collection($this->whenLoaded('episodes')),
         ];
     }
 }

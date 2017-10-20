@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PodcastResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PodcastSubscriptionController
 {
@@ -13,7 +15,9 @@ class PodcastSubscriptionController
      */
     public function index()
     {
-        //
+        return PodcastResource::collection(
+            Auth::user()->podcasts()->get()
+        );
     }
 
     /**
@@ -27,7 +31,7 @@ class PodcastSubscriptionController
             'podcast_id' => 'required',
         ]);
 
-        auth()->user()->podcasts()->sync(request('podcast_id'), false);
+        Auth::user()->podcasts()->sync(request('podcast_id'), false);
 
         return redirect()->back();
     }
@@ -40,7 +44,7 @@ class PodcastSubscriptionController
      */
     public function destroy($id)
     {
-        auth()->user()->podcasts()->detach($id);
+        Auth::user()->podcasts()->detach($id);
 
         return redirect()->back();
     }

@@ -61,8 +61,8 @@ class Podcast extends Model
     {
         return [
             'title'       => $this->title,
-            'domain'      => $this->meta->domain,
-            'description' => $this->meta->description,
+            'domain'      => $this->meta->domain ?? null,
+            'description' => $this->meta->description ?? null,
         ];
     }
 }
