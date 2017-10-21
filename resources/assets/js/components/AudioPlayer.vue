@@ -102,7 +102,9 @@
             },
 
             updateTime() {
-                axios.put(route('listens.update', this.episode.id), {time: this.duration});
+                if (this.episode.audio != null) {
+                    axios.put(route('listens.update', this.episode.id), {time: this.duration});  
+                }
             },
 
             completeEpisode() {
