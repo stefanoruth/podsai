@@ -24,7 +24,7 @@ class EpisodeCompletionController
             ],
         ]);
 
-        Auth::user()->listens()->create([
+        Auth::user()->episodeCompletions()->create([
             'episode_id' => request('id'),
         ]);
 
@@ -64,7 +64,7 @@ class EpisodeCompletionController
             $update = ['time' => request('time')];
         }
 
-        Auth::user()->listens()->updateOrCreate(['episode_id' => $id], $update);
+        Auth::user()->episodeCompletions()->updateOrCreate(['episode_id' => $id], $update);
     }
 
     /**

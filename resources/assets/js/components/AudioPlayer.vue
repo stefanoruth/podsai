@@ -14,7 +14,7 @@
             <p v-if="episode != null">{{ episode.title }}</p>
             </div>
 
-            <audio v-if id="audio-player" autoplay="" :src="audio" style="display:none;"></audio>
+            <audio id="audio-player" autoplay="" :src="audio" style="display:none;"></audio>
         </div>
     </div>
 </template>
@@ -70,7 +70,7 @@
             },
 
             loadEpisode(id) {
-                axios.get(route('listens.show', id)).then((response) => {
+                axios.get(route('completions.show', id)).then((response) => {
                     this.player.currentTime = (response.data.data.duration - 3); // Remove 3 sec for user to remeber where they left off.
                     this.episode = response.data.data.episode;
                 }).catch((error) => {
@@ -78,20 +78,20 @@
                         throw error;
                     }
 
-                    axios.post(route('listens.store'), {id: id}).then((response) => {
+                    axios.post(route('completions.store'), {id: id}).then((response) => {
                         this.episode = response.data.data;
                     });
                 });
             },
 
             updateTime() {
-                if (this.episode.audio != null) {
-                    axios.put(route('listens.update', this.episode.id), {time: this.duration});  
+                if (this.episode != null) {
+                    axios.put(route('completions.update', this.episode.id), {time: this.duration});  
                 }
             },
 
             completeEpisode() {
-                axios.put(route('listens.update', this.episode.id), {complete: true});
+                axios.put(route('completions.update', this.episode.id), {complete: true});
             },
 
             formatTime(seconds) {
@@ -111,8 +111,7 @@
 
             close() {
                 this.player.pause();
-                this.episode.audio = null;
-                this.episodeId = null;
+                this.episode = null;
             },
 
             hideTime(event) {

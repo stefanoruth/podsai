@@ -3,7 +3,7 @@
 @section('body')
 	<div id="app">
 		<navbar></navbar>
-		<audio-player :episode-id="episode"></audio-player>
+		<audio-player></audio-player>
 		<main class="section">
 			<div class="container">
 				<router-view></router-view>
