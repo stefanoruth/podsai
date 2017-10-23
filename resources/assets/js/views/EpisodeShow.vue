@@ -11,6 +11,7 @@
                     <div class="media-content">
                         <div class="title">{{ episode.title }}</div>
                         <div class="content"><small>{{ episode.length }}</small></div>
+                        <div class="button is-primary" @click="playEpisode(episode)">Play</div>
                         <div class="content" v-if="episode.show_notes != null" v-html="episode.show_notes"></div>
                         <div class="content" v-else v-html="episode.description"></div>
                     </div>
@@ -21,6 +22,8 @@
 </template>
 
 <script>
+    import {EventBus} from '../EventBus.js';
+
     export default {
         props: ['id', 'number'],
 
@@ -45,7 +48,8 @@
                 axios.get(route('episodes.show', id)).then((response) => {
                     this.episode = response.data.data;
                 });
-            }
+            },
+            playEpisode: EventBus.playEpisode,
         }
     }
 </script>

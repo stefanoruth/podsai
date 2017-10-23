@@ -1,45 +1,29 @@
 <template>
-    <div class="player" v-show="episode.audio != null">
+    <div class="player" v-show="episode != null">
         <div class="bar" v-on:mousemove="showTime" v-on:mouseleave="hideTime" @click="setTime">
             <span class="progress" :style="{width: barDuration}"></span>
             <span class="tooltip" :style="{left: tooltipOffset}" v-show="tooltip != null">{{ tooltip }}</span>
         </div>
         <div>
             
-            <img style="float:left;" v-if="episode.audio != null" :src="episode.podcast.logo">
+            <img style="float:left;" v-if="episode != null" :src="episode.podcast.logo">
             <div>
                 <button @click="togglePlay()">{{ isPlaying ? 'Pause' : 'Play' }}</button>
             <span>{{ humanTime }} / {{ humanLength }}</span>
             <button @click="close()">Close</button>
-            <p>{{ episode.title }}</p>
+            <p v-if="episode != null">{{ episode.title }}</p>
             </div>
 
-            <audio id="audio-player" autoplay="" :src="episode.audio" style="display:none;"></audio>
+            <audio v-if id="audio-player" autoplay="" :src="audio" style="display:none;"></audio>
         </div>
     </div>
 </template>
 
 <script>
     let moment = require('moment');
+    import {EventBus} from '../EventBus.js'; 
 
     export default {
-        props: {
-            episodeId: {
-                type: ['String', 'Number'],
-                default: null,
-            }
-        },
-
-        watch: {
-            episodeId: function(newId) {
-                if (newId == null) {
-                    this.episode = null;
-                } else {
-                    this.loadEpisode(newId);
-                }
-            },
-        },
-
         computed: {
             humanTime: function() {
                 return this.formatTime(this.duration);
@@ -56,15 +40,14 @@
         data() {
             return {
                 player: null,
+                episode: null,
+                audio: null,
                 isPlaying: false,
                 duration: 0,
                 length: 0,
                 durationPercentage: '0%',
                 tooltip: null,
                 tooltipOffset: '-10px',
-                episode: {
-                    audio: null,
-                },
             };
         },
 
@@ -157,6 +140,10 @@
                 window.addEventListener('beforeunload', () => {
                     this.updateTime();
                 });
+                EventBus.$on('playEpisode', (episode) => {
+                  this.episode = episode;
+                  this.audio = episode.audio;
+                });
             },
         },
     }
@@ -185,6 +172,7 @@
         height: 100%;
         width: 0%;
         display: block;
+        border-radius: 0px;
     }
 
     .tooltip {

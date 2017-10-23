@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="column is-5">
-                <div v-for="episode in latestEpisodes" @click="play(episode.id)" class="box">
+                <div v-for="episode in latestEpisodes" @click="playEpisode(episode)" class="box">
                     <article class="media">
                         <div class="media-left">
                             <div class="image is-48x48">
@@ -57,6 +57,8 @@
 </template>
 
 <script>
+    import {EventBus} from '../EventBus.js';
+
     export default {
         data() {
             return {
@@ -76,11 +78,7 @@
         },
 
         methods: {
-            play(id) {
-                console.log(this.$parent);
-                this.$parent.playEpisode(id);
-                this.$parent.$options.methods.playEpisode(id);
-            },
-        }
+            playEpisode: EventBus.playEpisode,
+        },
     }
 </script>

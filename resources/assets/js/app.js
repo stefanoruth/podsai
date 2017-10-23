@@ -31,14 +31,4 @@ const app = new Vue({
             {path:'/podcasts/:id/episodes/:number', name:'episodeShow', component: require('./views/EpisodeShow'), props: true},
         ],
     }),
-
-    data: {
-        episode: null,
-    },
-
-    methods: {
-        playEpisode(id) {
-            this.episode = id;
-        }
-    },
 });
