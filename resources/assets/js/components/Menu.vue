@@ -19,6 +19,7 @@
         <div class="navbar-menu" v-bind:class="{'is-active':mobileMenu}">
             <div class="navbar-end">
                 <router-link to="/" class="navbar-item">Home</router-link>
+                <a :href="logout" class="navbar-item">Logout</a>
             </div>
         </div>
     </nav>
@@ -35,6 +36,10 @@
         computed: {
             user: function() {
                 return window.user;
+            },
+
+            logout: function() {
+                return route('logout');
             },
         },
     }
