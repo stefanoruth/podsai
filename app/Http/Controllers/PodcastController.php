@@ -17,7 +17,7 @@ class PodcastController
      */
     public function index()
     {
-        return PodcastResource::collection(Podcast::with(['episodes' => function($query){
+        return PodcastResource::collection(Podcast::with(['subscription', 'episodes' => function($query){
             $query->with('userCompletions')->sortLatest();
         }])->get());
     }

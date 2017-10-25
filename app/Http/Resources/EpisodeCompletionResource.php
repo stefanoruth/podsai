@@ -15,7 +15,7 @@ class EpisodeCompletionResource extends Resource
     public function toArray($request)
     {
         return [
-            'duration'  => $this->time,
+            'duration'  => $this->time ?? 0,
             'completed' => !is_null($this->completed_at),
             'episode'   => EpisodeResource::make($this->whenLoaded('episode')),
         ];

@@ -8,7 +8,7 @@ use Laravel\Scout\Searchable;
 
 class Episode extends Model
 {
-    use Searchable;
+    //use Searchable;
 
     /**
      * The attributes that aren't mass assignable.

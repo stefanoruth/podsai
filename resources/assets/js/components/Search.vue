@@ -39,7 +39,7 @@
         },
 
         created() {
-            this.algolia = algoliasearch().initIndex('podcasts');
+            this.algolia = algoliasearch('I1D6UBRELN', '77fc9a5cb6b106f6a8ce0235aac5522e').initIndex('podcasts');
         },
 
         methods: {

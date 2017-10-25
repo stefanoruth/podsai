@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Scout\Searchable;
 
 class Podcast extends Model
@@ -41,6 +42,15 @@ class Podcast extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_podcasts')->withTimestamps();
+    }
+
+    /**
+     * Relationship
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class)->where('user_id', Auth::id());
     }
 
     /** 

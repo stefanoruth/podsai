@@ -27,7 +27,7 @@ class EpisodeResource extends Resource
             'length'            => data_get($this->meta, 'length'),
             'show_notes'        => data_get($this->meta, 'show_notes'),
             'podcast'           => PodcastResource::make($this->whenLoaded('podcast')),
-            'listen'            => EpisodeCompletionResource::make($this->whenLoaded('listen')),
+            'completion'        => EpisodeCompletionResource::make($this->whenLoaded('userCompletion')),
         ];
     }
 }

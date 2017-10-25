@@ -23,29 +23,25 @@ class PodcastSubscriptionController
     /**
      * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function store()
     {
-        $this->validate(request(), [
+        request()->validate([
             'podcast_id' => 'required',
         ]);
 
         Auth::user()->podcasts()->sync(request('podcast_id'), false);
-
-        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy($id)
     {
         Auth::user()->podcasts()->detach($id);
-
-        return redirect()->back();
     }
 }

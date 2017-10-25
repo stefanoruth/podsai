@@ -2,12 +2,13 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     /**
      * The attributes that aren't mass assignable.
@@ -60,7 +61,7 @@ class User extends Authenticatable
      */
     public function latestsEpisodes($count = 10)
     {
-        return Episode::with('podcast')
+        return Episode::with('podcast', 'userCompletion')
             ->whereIn('podcast_id', $this->podcasts()->pluck('id'))
             ->orderBy('published_at', 'DESC')
             ->take($count)->get();

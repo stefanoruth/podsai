@@ -46,6 +46,8 @@
                                     <strong>{{ episode.title }}</strong> <small>@{{ episode.podcast.title }}</small>
                                     <br>
                                     <span>{{ episode.description_short }}</span>
+                                    <br>
+                                    <span>Status: {{ episode.completion != null && episode.completion.completed ? 'Completed' : 'New' }}</span>
                                 </p>
                             </div>
                         </div>

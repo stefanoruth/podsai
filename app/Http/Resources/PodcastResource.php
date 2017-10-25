@@ -19,6 +19,7 @@ class PodcastResource extends Resource
             'title'          => $this->title,
             'logo'           => $this->logo(),
             'description'    => $this->meta->description,
+            'subscribed'     => !is_null($this->subscription),
             'episodes_count' => $this->when(isset($this->episodes_count), $this->episodes_count),
             'episodes'       => EpisodeResource::collection($this->whenLoaded('episodes')),
         ];

@@ -1,21 +1,24 @@
 <template>
     <div class="player" v-show="episode != null">
-        <div class="bar" v-on:mousemove="showTime" v-on:mouseleave="hideTime" @click="setTime">
-            <span class="progress" :style="{width: barDuration}"></span>
-            <span class="tooltip" :style="{left: tooltipOffset}" v-show="tooltip != null">{{ tooltip }}</span>
-        </div>
-        <div>
-            
-            <img style="float:left;" v-if="episode != null" :src="episode.podcast.logo">
-            <div>
-                <button @click="togglePlay()">{{ isPlaying ? 'Pause' : 'Play' }}</button>
-            <span>{{ humanTime }} / {{ humanLength }}</span>
-            <button @click="close()">Close</button>
-            <p v-if="episode != null">{{ episode.title }}</p>
+        <div v-if="episode != null">
+            <div class="bar" v-on:mousemove="showTime" v-on:mouseleave="hideTime" @click="setTime">
+                <span class="progress" :style="{width: barDuration}"></span>
+                <span class="tooltip" :style="{left: tooltipOffset}" v-show="tooltip != null">{{ tooltip }}</span>
             </div>
+            <div>
+                
+                <img style="float:left;" :src="episode.podcast.logo">
+                <div>
+                    <button @click="togglePlay()">{{ isPlaying ? 'Pause' : 'Play' }}</button>
+                <span>{{ humanTime }} / {{ humanLength }}</span>
+                <button @click="close()">Close</button>
+                <p>{{ episode.title }}</p>
+                </div>
 
-            <audio id="audio-player" autoplay="" :src="audio" style="display:none;"></audio>
+            </div>
         </div>
+        
+        <audio id="audio-player" autoplay="" :src="audio" style="display:none;"></audio>
     </div>
 </template>
 
@@ -69,18 +72,11 @@
                 }
             },
 
-            loadEpisode(id) {
-                axios.get(route('completions.show', id)).then((response) => {
-                    this.player.currentTime = (response.data.data.duration - 3); // Remove 3 sec for user to remeber where they left off.
-                    this.episode = response.data.data.episode;
-                }).catch((error) => {
-                    if (error.response.status != 404) {
-                        throw error;
+            loadDuration() {
+                axios.get(route('completions.show', this.episode.id)).then((response) => {
+                    if (response.data != null) {
+                        this.player.currentTime = response.data.data.duration - 3;  // Remove 3 sec for user to remeber where they left off.
                     }
-
-                    axios.post(route('completions.store'), {id: id}).then((response) => {
-                        this.episode = response.data.data;
-                    });
                 });
             },
 
@@ -142,6 +138,7 @@
                 EventBus.$on('playEpisode', (episode) => {
                   this.episode = episode;
                   this.audio = episode.audio;
+                  this.loadDuration();
                 });
             },
         },

@@ -41,9 +41,13 @@ class EpisodeCompletionController
      */
     public function show($id)
     {
-        return EpisodeCompletionResource::make(
-            Auth::user()->episodeCompletions()->with('episode.podcast')->where('episode_id', $id)->firstOrFail()
-        );
+        $completion = Auth::user()->episodeCompletions()->where('episode_id', $id)->first();
+
+        if (is_null($completion)) {
+            return;
+        }
+
+        return EpisodeCompletionResource::make($completion);
     }
 
     /**

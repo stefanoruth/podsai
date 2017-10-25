@@ -11,6 +11,7 @@
                     <div class="media-content">
                         <div class="title">{{ podcast.title }}</div>
                         <div class="content">{{ podcast.description }}</div>
+                        <div class="button is-primary" @click="subscribe">{{ podcast.subscribed ? 'Unsubscribe' : 'Subscribe' }}</div>
                     </div>
                 </div>
             </div>
@@ -60,7 +61,19 @@
                 axios.get(route('podcasts.show', id)).then((response) => {
                     this.podcast = response.data.data;
                 });
-            }
+            },
+
+            subscribe() {
+                if (this.podcast.subscribed) {
+                    axios.delete(route('subscriptions.destroy', this.podcast.id)).then((response) => {
+                        this.podcast.subscribed = false;
+                    });
+                } else {
+                    axios.post(route('subscriptions.store'), {podcast_id:this.podcast.id}).then((response) => {
+                        this.podcast.subscribed = true;
+                    });
+                }
+            },
         }
     }
 </script>

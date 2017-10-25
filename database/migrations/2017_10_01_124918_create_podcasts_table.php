@@ -20,7 +20,6 @@ class CreatePodcastsTable extends Migration
             $table->string('logo')->nullable();
             $table->json('meta')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
