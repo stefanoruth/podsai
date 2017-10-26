@@ -106,8 +106,10 @@
             },
 
             close() {
-                this.player.pause();
+                this.updateTime();
+                this.isPlaying = false;
                 this.episode = null;
+                this.audio = null;
             },
 
             hideTime(event) {
