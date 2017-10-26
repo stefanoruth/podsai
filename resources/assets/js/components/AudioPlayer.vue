@@ -74,7 +74,7 @@
 
             loadDuration() {
                 axios.get(route('completions.show', this.episode.id)).then((response) => {
-                    if (response.data != null) {
+                    if (response.data != "") {
                         this.player.currentTime = response.data.data.duration - 3;  // Remove 3 sec for user to remeber where they left off.
                     }
                 });
@@ -106,8 +106,7 @@
             },
 
             close() {
-                this.updateTime();
-                this.isPlaying = false;
+                this.player.pause();
                 this.episode = null;
                 this.audio = null;
             },
