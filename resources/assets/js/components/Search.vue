@@ -1,6 +1,6 @@
 <template>
     <div class="search">
-        <input v-model="searchQuery" type="text" v-on:keyup.enter="search" placeholder="Search for podcasts..." autocomplete="off">
+        <input v-model="searchQuery" type="text" v-on:keyup="search" placeholder="Search for podcasts..." autocomplete="off">
         <div class="results" v-show="results.length > 0">
             <template v-for="result in results">
                 <router-link :to="{name:'podcastShow',params:{id:result.objectID}}">
