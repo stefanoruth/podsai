@@ -4,10 +4,8 @@
 	<div id="app">
 		<navbar></navbar>
 		<audio-player></audio-player>
-		<main class="section">
-			<div class="container">
-				<router-view></router-view>
-			</div>
+		<main class="container mx-auto">
+			<router-view></router-view>
 		</main>
 	</div>
 

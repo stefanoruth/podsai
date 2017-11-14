@@ -19,7 +19,7 @@ class EpisodeResource extends Resource
             'title'             => $this->title,
             'audio'             => $this->audio,
             'link'              => data_get($this->meta, 'link'),
-            'description_short' => str_limit(data_get($this->meta, 'description'), 150),
+            'description_short' => str_limit(data_get($this->meta, 'description'), 130),
             'description'       => data_get($this->meta, 'description'),
             'published_at'      => $this->published_at->format('Y-m-d H:i:s'),
             'season'            => $this->transform(data_get($this->meta, 'season'), function($value){return (int) $value;}),

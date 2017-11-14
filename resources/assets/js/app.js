@@ -15,6 +15,7 @@ Vue.config.productionTip = false
 Vue.component('audio-player', require('./components/AudioPlayer'));
 Vue.component('search-field', require('./components/Search'));
 Vue.component('navbar', require('./components/Menu'));
+Vue.component('episode-card', require('./components/EpisodeCard'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
