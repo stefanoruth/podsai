@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-wrap p-4 max-w-md mx-auto">
-        <div v-for="podcast in podcasts" :key="podcast.id" class="px-2 mb-4">
+        <div v-for="podcast in podcasts" :key="podcast.id" class="p-3">
             <div class="bg-grey cursor-pointer shadow-md" :title="podcast.title" @click="$router.push({name:'podcasts.show', params:{id:podcast.id}})">
                 <div class="h-32 w-32 flex-none bg-cover overflow-hidden" v-bind:style="{'background-image':'url('+podcast.logo+')'}"></div>
             </div>

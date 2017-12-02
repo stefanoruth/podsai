@@ -13,8 +13,8 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4" v-if="episode.show_notes != null" v-html="episode.show_notes"></div>
-            <div class="p-4" v-else v-html="episode.description"></div>
+            <div class="p-4 content" v-if="episode.show_notes != null" v-html="episode.show_notes"></div>
+            <div class="p-4 content" v-else v-html="episode.description"></div>
         </div>
     </div>
 </template>
