@@ -10,7 +10,7 @@
         window.user = '{{ auth()->user()->name ?? 'Guest' }}';
     </script>
 </head>
-<body class="font-sans bg-indigo-lightest">
+<body class="font-sans bg-grey-lightest">
     @yield('body')
 </body>
 </html>

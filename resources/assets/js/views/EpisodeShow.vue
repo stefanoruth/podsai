@@ -1,22 +1,20 @@
 <template>
-    <div class="columns">
-        <div class="column" v-if="episode != null">
-            <div class="box">
-                <div class="media">
-                    <div class="media-left">
-                        <div class="image is-128x128">
-                            <img :src="episode.podcast.logo">
-                        </div>
+    <div class="mx-auto max-w-md p-4" v-if="episode != null">
+        <div class="w-full shadow rounded bg-white">
+            <div class="flex">
+                <div class="h-32 w-32 flex-none bg-cover overflow-hidden" v-bind:style="{'background-image':'url('+episode.podcast.logo+')'}"></div>
+                <div class="p-4">
+                    <div class="mb-2">
+                        <div class="text-lg font-bold mb-2">{{ episode.title }}</div>
+                        <div>{{ episode.length }}</div>
                     </div>
-                    <div class="media-content">
-                        <div class="title">{{ episode.title }}</div>
-                        <div class="content"><small>{{ episode.length }}</small></div>
-                        <div class="button is-primary" @click="playEpisode(episode)">Play</div>
-                        <div class="content" v-if="episode.show_notes != null" v-html="episode.show_notes"></div>
-                        <div class="content" v-else v-html="episode.description"></div>
+                    <div>
+                        <button class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded" @click="playEpisode(episode)">Play</button>
                     </div>
                 </div>
             </div>
+            <div class="p-4" v-if="episode.show_notes != null" v-html="episode.show_notes"></div>
+            <div class="p-4" v-else v-html="episode.description"></div>
         </div>
     </div>
 </template>
@@ -25,7 +23,7 @@
     import {EventBus} from '../EventBus.js';
 
     export default {
-        props: ['id', 'number'],
+        props: ['id'],
 
         data() {
             return {
@@ -33,23 +31,14 @@
             };
         },
 
-        watch: {
-            number: function(newVal) {
-                this.init(newVal);
-            }
-        },
-
-        created() {
-            this.init(this.number);
+        mounted() {
+            axios.get(route('episodes.show', this.id)).then((response) => {
+                this.episode = response.data.data;
+            });
         },
 
         methods: {
-            init(id) {
-                axios.get(route('episodes.show', id)).then((response) => {
-                    this.episode = response.data.data;
-                });
-            },
             playEpisode: EventBus.playEpisode,
-        }
+        },
     }
 </script>

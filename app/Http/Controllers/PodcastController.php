@@ -17,8 +17,8 @@ class PodcastController
      */
     public function index()
     {
-        return PodcastResource::collection(Podcast::with(['subscription', 'episodes' => function($query){
-            $query->with('userCompletions')->sortLatest();
+        return PodcastResource::collection(Podcast::with(['subscription', 'episodes' => function ($query) {
+            $query->with('userCompletions', 'podcast')->sortLatest();
         }])->get());
     }
 
@@ -51,8 +51,8 @@ class PodcastController
      */
     public function show($id)
     {
-        return PodcastResource::make(Podcast::with(['episodes' => function($query){
-            $query->sortLatest();
+        return PodcastResource::make(Podcast::with(['episodes' => function ($query) {
+            $query->with('podcast')->sortLatest();
         }])->findOrFail($id));
     }
 }

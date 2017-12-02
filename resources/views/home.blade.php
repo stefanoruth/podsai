@@ -4,7 +4,7 @@
 	<div id="app">
 		<navbar></navbar>
 		<audio-player></audio-player>
-		<main class="container mx-auto">
+		<main class="container mx-auto pb-8">
 			<router-view></router-view>
 		</main>
 	</div>

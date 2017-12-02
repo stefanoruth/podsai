@@ -28,8 +28,9 @@ const app = new Vue({
     router: new VueRouter({
         routes: [
             {path:'/', component: require('./views/Home')},
-            {path:'/podcasts/:id', name:'podcastShow', component: require('./views/PodcastShow'), props: true},
-            {path:'/podcasts/:id/episodes/:number', name:'episodeShow', component: require('./views/EpisodeShow'), props: true},
+            {path:'/podcasts', name:'podcasts.index', component: require('./views/Podcasts')},
+            {path:'/podcasts/:id', name:'podcasts.show', component: require('./views/PodcastShow'), props: true},
+            {path:'/episodes/:id', name:'episodes.show', component: require('./views/EpisodeShow'), props: true},
         ],
     }),
 });

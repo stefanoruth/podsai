@@ -1,42 +1,37 @@
 <template>
-    <div v-if="podcast != null" class="columns">
-        <div class="column">
-            <div class="box">
-                <div class="media">
-                    <div class="media-left">
-                        <div class="image is-128x128">
-                            <img :src="podcast.logo">
-                        </div>
-                    </div>
-                    <div class="media-content">
-                        <div class="title">{{ podcast.title }}</div>
-                        <div class="content">{{ podcast.description }}</div>
-                        <div class="button is-primary" @click="subscribe">{{ podcast.subscribed ? 'Unsubscribe' : 'Subscribe' }}</div>
+    <div v-if="podcast != null" class="mx-auto max-w-md p-4">
+        <div class="w-full shadow rounded bg-white mb-8">
+            <div class="flex">
+                <div class="h-32 w-32 flex-none bg-cover overflow-hidden" v-bind:style="{'background-image':'url('+podcast.logo+')'}"></div>
+                <div class="p-4">
+                    <div class="text-lg font-bold mb-2">{{ podcast.title }}</div>
+                    <div>
+                        <button class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded" @click="subscribe">{{ podcast.subscribed ? 'Unsubscribe' : 'Subscribe' }}</button>
+                        <button class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded">Play</button>
                     </div>
                 </div>
             </div>
+            <div class="p-4">{{ podcast.description }}</div>
         </div>
-        <div class="column is-5">
-            <template v-for="episode in podcast.episodes">
-                <router-link :to="{name:'episodeShow', params:{id:podcast.id, number:episode.id}}" class="box">
-                    <div class="content">
-                        <p>
-                            <span v-if="episode.number != null">
-                                <small><span v-if="episode.season > 1">Season: {{ episode.season }} -</span> Episode: {{ episode.number }}</small>
-                                <br>
-                            </span>
-                            <strong>{{ episode.title }}</strong>
-                            <br>
-                            <span>{{ episode.description_short }}</span>
-                        </p>
-                    </div>
-                </router-link>
-            </template>
+
+        <div v-for="episode in podcast.episodes" :key="episode.id" class="flex w-full shadow rounded bg-white mb-4 p-4">
+            <div class="flex-1 cursor-pointer" @click="$router.push({name:'episodes.show',params:{id:episode.id}})">
+                <div class="text-xs text-grey-darker" v-if="episode.number != null">
+                    <span v-if="episode.season > 1">Season: {{ episode.season }} -</span>
+                    <span>Episode: {{ episode.number }}</span>
+                </div>
+                <div class="text-black font-bold">{{ episode.title }}</div>
+            </div>
+            <div>
+                <button @click="playEpisode(episode)" class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded">Play</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import {EventBus} from '../EventBus.js';
+
     export default {
         props: ['id'],
 
@@ -46,23 +41,13 @@
             };
         },
 
-        watch: { 
-            id: function(newVal) {
-                this.init(newVal);
-            }
-        },
-
-        created() {
-            this.init(this.id);
+        mounted() {
+            axios.get(route('podcasts.show', this.id)).then(response => {
+                this.podcast = response.data.data;
+            });
         },
 
         methods: {
-            init(id) {
-                axios.get(route('podcasts.show', id)).then((response) => {
-                    this.podcast = response.data.data;
-                });
-            },
-
             subscribe() {
                 if (this.podcast.subscribed) {
                     axios.delete(route('subscriptions.destroy', this.podcast.id)).then((response) => {
@@ -74,6 +59,8 @@
                     });
                 }
             },
-        }
+
+            playEpisode: EventBus.playEpisode,
+        },
     }
 </script>
