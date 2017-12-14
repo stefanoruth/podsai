@@ -10,7 +10,8 @@
         </div>
         <div class="lg:flex lg:items-stretch lg:flex-no-shrink lg:flex-grow hidden" v-bind:class="{'is-active':mobileMenu}">
             <div class="lg:flex lg:items-stretch lg:justify-end ml-auto">
-                <router-link to="/podcasts" class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal text-white no-underline flex items-center hover:bg-grey-dark">Podcasts</router-link>
+                <router-link :to="{name:'podcasts.create'}" class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal text-white no-underline flex items-center hover:bg-grey-dark">Add Podcast</router-link>
+                <router-link :to="{name:'podcasts.index'}" class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal text-white no-underline flex items-center hover:bg-grey-dark">Podcasts</router-link>
                 <a :href="logout" class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal text-white no-underline flex items-center hover:bg-grey-dark">Logout</a>
             </div>
         </div>

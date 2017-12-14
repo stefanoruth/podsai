@@ -1,4 +1,5 @@
 /*
+
 Tailwind - The Utility-First CSS Framework
 
 A project by Adam Wathan (@adamwathan), Jonathan Reinink (@reinink),
@@ -22,7 +23,7 @@ View the full documentation at https://tailwindcss.com.
 |
 */
 
-// var defaultConfig = require('tailwindcss/defaultConfig')();
+// let defaultConfig = require('tailwindcss/defaultConfig')()
 
 /*
 |-------------------------------------------------------------------------------
@@ -40,7 +41,7 @@ View the full documentation at https://tailwindcss.com.
 |
 */
 
-var colors = {
+let colors = {
   'transparent': 'transparent',
 
   'black': '#222b2f',

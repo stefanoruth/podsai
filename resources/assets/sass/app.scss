@@ -1,4 +1,9 @@
 @tailwind preflight;
+
+em {
+    @apply .bg-grey-light;
+}
+
 @tailwind utilities;
 @import 'content';
 
@@ -63,3 +68,4 @@
 .is-active {
     display: block;
 }
+

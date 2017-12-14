@@ -25,22 +25,21 @@ class PodcastController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $this->validate($request, [
+        request()->validate([
             'url' => 'required',
         ]);
 
         $podcast = Podcast::firstOrCreate([
-            'url' => $request->get('url'),
+            'url' => request('url'),
         ]);
 
-        $this->dispatch(new UpdatePodcast($podcast));
+        dispatch_now(new UpdatePodcast($podcast));
 
-        return redirect()->back();
+        return PodcastResource::make($podcast);
     }
 
     /**

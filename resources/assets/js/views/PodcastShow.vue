@@ -7,7 +7,6 @@
                     <div class="text-lg font-bold mb-2">{{ podcast.title }}</div>
                     <div>
                         <button class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded" @click="subscribe">{{ podcast.subscribed ? 'Unsubscribe' : 'Subscribe' }}</button>
-                        <button class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded">Play</button>
                     </div>
                 </div>
             </div>
@@ -22,7 +21,7 @@
                 </div>
                 <div class="text-black font-bold">{{ episode.title }}</div>
             </div>
-            <div>
+            <div class="ml-2">
                 <button @click="playEpisode(episode)" class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded">Play</button>
             </div>
         </div>
