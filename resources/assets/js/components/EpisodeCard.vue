@@ -1,7 +1,7 @@
 <template>
     <div class="max-w-md w-full flex shadow rounded bg-white">
         <div class="h-32 w-32 flex-none bg-cover overflow-hidden cursor-pointer" @click="$router.push({name:'episodes.show',params:{id:episode.id}})" v-bind:style="{'background-image':'url('+episode.podcast.logo+')'}"></div>
-        <div class="p-4 flex flex-col justify-between">
+        <div class="p-4 flex flex-col justify-between w-full">
             <div class="flex">
                 <div class="flex-1">
                     <div class="text-xs text-grey-darker" v-if="episode.number != null">
