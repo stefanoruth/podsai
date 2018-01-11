@@ -15,7 +15,7 @@ class TrendingPodcastController
     public function index()
     {
         return PodcastResource::collection(
-            Podcast::withCount('users')->withCount('episodes')->orderBy('users_count', 'DESC')->take(10)->get()
+            Podcast::withCount('users')->withCount('episodes')->orderBy('users_count', 'DESC')->take(20)->get()
         );
     }
 }
