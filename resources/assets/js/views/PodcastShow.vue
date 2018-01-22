@@ -1,28 +1,39 @@
 <template>
-    <div v-if="podcast != null" class="mx-auto max-w-md p-4">
-        <div class="w-full shadow rounded bg-white mb-8">
-            <div class="flex">
-                <div class="h-32 w-32 flex-none bg-cover overflow-hidden" v-bind:style="{'background-image':'url('+podcast.logo+')'}"></div>
-                <div class="p-4">
-                    <div class="text-lg font-bold mb-2">{{ podcast.title }}</div>
-                    <div>
-                        <button class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded" @click="subscribe">{{ podcast.subscribed ? 'Unsubscribe' : 'Subscribe' }}</button>
+    <div v-if="podcast != null" class="mx-auto max-w-2xl px-4 py-8">
+        <div class="md:flex">
+            <div class="flex justify-center md:block md:pr-8 md:w-1/4 mb-4">
+                <img class="h-32 w-32 md:h-auto md:w-full shadow-md" :src="podcast.logo">
+            </div>
+            <div class="flex-1">
+                <div class="mb-8">
+                    <div class="text-3xl text-black font-bold">{{ podcast.title }}</div>
+                    <div class="mb-2">
+                        <a class="no-underline uppercase text-grey-darker text-sm" :href="podcast.domain_url" target="_blank">{{ podcast.domain }}</a>
+                    </div>
+                    <div class="mb-4">
+                        <button class="py-1 px-3 border rounded" :class="{'bg-orange text-white border-orange': podcast.subscribed, 'hover:bg-orange hover:text-white hover:border-orange': !podcast.subscribed}" @click="subscribe">{{ podcast.subscribed ? 'Subscribed' : 'Subscribe' }}</button>
+                    </div>
+                    <div class="text-grey">{{ podcast.description }}</div>
+                </div>
+
+                <div class="pb-8">
+                    <div class="border-b pb-2">
+                        <template v-if="recentOnly">
+                            <span class="font-bold mr-2">Recent Episodes</span>
+                            <a class="no-underline text-blue hover:text-blue-darker hover:underline" v-if="recentOnly" @click="recentOnly = false" href="#">View all</a>
+                        </template>
+                        <span v-else class="font-bold">All episodes</span>
+                    </div>
+                    <div v-for="episode in visibleEpisodes" :key="episode.id" class="flex border-b items-center py-2">
+                        <div class="text-grey-dark px-3" v-if="episode.number">{{ episode.number }}</div>
+                        <div class="pr-2 flex-1">{{ episode.title }}</div>
+                        <div class="pr-2 text-grey-dark">45 min</div>
+                        <div class="pr-4 text-grey-dark">{{ episode.published_at }}</div>
+                        <div>
+                            <button class="btn" @click="playEpisode(episode)">Listen</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="p-4">{{ podcast.description }}</div>
-        </div>
-
-        <div v-for="episode in podcast.episodes" :key="episode.id" class="flex w-full shadow rounded bg-white mb-4 p-4">
-            <div class="flex-1 cursor-pointer" @click="$router.push({name:'episodes.show',params:{id:episode.id}})">
-                <div class="text-xs text-grey-darker" v-if="episode.number != null">
-                    <span v-if="episode.season > 1">Season: {{ episode.season }} -</span>
-                    <span>Episode: {{ episode.number }}</span>
-                </div>
-                <div class="text-black font-bold">{{ episode.title }}</div>
-            </div>
-            <div class="ml-2">
-                <button @click="playEpisode(episode)" class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded">Play</button>
             </div>
         </div>
     </div>
@@ -37,7 +48,18 @@
         data() {
             return {
                 podcast: null,
+                recentOnly: true,
             };
+        },
+
+        computed: {
+            visibleEpisodes: function() {
+                if (this.recentOnly) {
+                    return this.podcast.episodes.splice(0,5);
+                }
+
+                return this.podcast.episodes;
+            },
         },
 
         mounted() {

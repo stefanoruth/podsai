@@ -6,7 +6,7 @@ use App\Episode;
 use App\Http\Resources\EpisodeResource;
 use Illuminate\Http\Request;
 
-class EpisodeController
+class PodcastEpisodeController
 {
     /**
      * Display the specified resource.

@@ -1,4 +1,4 @@
-@extends('app')
+@extends('master')
 
 @section('body')
     <div class="h-screen border-t-4 bg-pattern border-grey p-6 flex justify-center items-center">

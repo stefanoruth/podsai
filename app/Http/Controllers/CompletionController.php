@@ -7,7 +7,7 @@ use App\Http\Resources\EpisodeCompletionResource;
 use App\Http\Resources\ListenResource;
 use Illuminate\Support\Facades\Auth;
 
-class EpisodeCompletionController
+class CompletionController
 {
     /**
      * Store a newly created resource in storage.

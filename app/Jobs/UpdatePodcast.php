@@ -53,8 +53,8 @@ class UpdatePodcast implements ShouldQueue
     {
         $itunes = $feed->channel->children('http://www.itunes.com/dtds/podcast-1.0.dtd');
 
-        $title = formatInput($feed->channel->title);
-        $avatar = formatInput($itunes->image->attributes()['href'] ?? $feed->channel->image->url);
+        $title = $this->formatInput($feed->channel->title);
+        $avatar = $this->formatInput($itunes->image->attributes()['href'] ?? $feed->channel->image->url);
 
         $filename = Str::slug($title);
         $extension = pathinfo($avatar, PATHINFO_EXTENSION);
@@ -63,16 +63,16 @@ class UpdatePodcast implements ShouldQueue
             'title' => $title,
             'logo'  => "{$filename}.{$extension}",
             'meta'  => [
-                'description' => formatInput($feed->channel->description),
+                'description' => $this->formatInput($feed->channel->description),
                 'avatar'      => $avatar,
-                'domain'      => formatInput($feed->channel->link),
+                'domain'      => $this->formatInput($feed->channel->link),
             ],
         ]);
 
         $file = storage_path("app/public/logos/{$filename}.{$extension}");
 
         if (!file_exists($file)) {
-            Image::make($avatar)->fit(128, 128)->save($file);
+            Image::make($avatar)->fit(256, 256)->save($file);
         }
     }
 
@@ -86,14 +86,14 @@ class UpdatePodcast implements ShouldQueue
         $itunes = $item->children('http://www.itunes.com/dtds/podcast-1.0.dtd');
 
         $this->podcast->episodes()->updateOrCreate([
-            'key' => formatInput($item->guid),
+            'key' => $this->formatInput($item->guid),
         ], [
-            'title'        => formatInput($item->title),
-            'audio'        => formatInput($item->enclosure->attributes()['url']),
+            'title'        => $this->formatInput($item->title),
+            'audio'        => $this->formatInput($item->enclosure->attributes()['url']),
             'published_at' => strtotime($item->pubDate),
             'meta'         => [
                 'length'      => value(function() use ($itunes){
-                    $duration = formatInput($itunes->duration);
+                    $duration = $this->formatInput($itunes->duration);
 
                     if (strpos($duration, ':') === false) {
                         return gmdate('H:i:s', $duration);
@@ -101,12 +101,28 @@ class UpdatePodcast implements ShouldQueue
 
                     return $duration;
                 }),
-                'season'      => formatInput($itunes->season),
-                'number'      => formatInput($itunes->episode),
-                'link'        => formatInput($item->link),
-                'description' => strip_tags(formatInput($item->description)),
-                'show_notes'  => preg_replace("/(<a)/", '<a target="_blank" rel="noreferrer"', formatInput($item->children('http://purl.org/rss/1.0/modules/content/')->encoded)),
+                'season'      => $this->formatInput($itunes->season),
+                'number'      => $this->formatInput($itunes->episode),
+                'link'        => $this->formatInput($item->link),
+                'description' => strip_tags($this->formatInput($item->description)),
+                'show_notes'  => preg_replace("/(<a)/", '<a target="_blank" rel="noreferrer"', $this->formatInput($item->children('http://purl.org/rss/1.0/modules/content/')->encoded)),
             ],
         ]);
+    }
+
+    /**
+     * Formats a value
+     * @param  string $value
+     * @return mixed
+     */
+    private function formatInput($value)
+    {
+        if ($value instanceof \SimpleXMLElement) {
+            $value = (string) $value;
+        }
+        
+        if (strlen(trim($value)) > 0) {
+            return trim($value);
+        }
     }
 }

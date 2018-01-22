@@ -1,5 +1,5 @@
 <?php
-
+\Auth::loginUsingId(1);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,20 +12,18 @@
 */
 
 // Public
-$router->view('welcome', 'welcome')->middleware('guest')->name('login');
+Route::get('/', 'MainController@index')->name('login');
 
 // Auth
-$router->get('logout', 'AuthController@logout')->middleware('auth')->name('logout');
-$router->get('login', 'AuthController@redirectToProvider')->middleware('guest');
-$router->get('login/callback', 'AuthController@handleProviderCallback')->middleware('guest');
+Route::get('logout', 'AuthController@logout')->middleware('auth')->name('logout');
+Route::get('login', 'AuthController@redirectToProvider')->middleware('guest');
+Route::get('login/callback', 'AuthController@handleProviderCallback')->middleware('guest');
 
 // App
-$router->view('/', 'home')->middleware('auth')->name('home');
-$router->middleware('auth')->prefix('api')->group(function ($router) {
-    $router->resource('podcasts/trending', 'TrendingPodcastController')->only('index');
-    $router->resource('podcasts/subscriptions', 'PodcastSubscriptionController')->only('index', 'store', 'destroy');
-    $router->resource('podcasts', 'PodcastController')->only('index', 'store', 'show');
-    $router->resource('episodes/completions', 'EpisodeCompletionController')->only('store', 'show', 'update', 'destroy');
-    $router->resource('episodes/latest', 'LatestEpisodeController')->only('index');
-    $router->resource('episodes', 'EpisodeController')->only('show');
+Route::middleware('auth')->prefix('api')->group(function () {
+    Route::resource('subscriptions', 'SubscriptionController')->only('index', 'store', 'destroy');
+    Route::resource('completions', 'CompletionController')->only('store', 'show', 'update', 'destroy');
+    Route::resource('podcasts', 'PodcastController')->only('index', 'store', 'show');
+    Route::resource('podcasts/{podcast}/episodes', 'PodcastEpisodeController')->only('show');
+    Route::resource('episodes/latest', 'LatestEpisodeController')->only('index');
 });

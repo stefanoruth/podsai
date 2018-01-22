@@ -1,6 +1,22 @@
 <template>
-    <div class="max-w-md p-4 mx-auto">
-        <episode-card v-for="episode in latestEpisodes" :key="episode.id" :episode="episode" class="mb-4"></episode-card>
+    <div>
+        <div class="bg-orange p-8 border-b border-t">
+            <div class="text-3xl font-bold">Podcasting for Programmers</div>
+            <div class="text-xl text-grey">The best place to discover and publish pdcasts about building software.</div>
+        </div>
+
+        <div class="p-4 max-w-2xl mx-auto">
+            <div class="text-3xl mb-2">Popular Shows</div>
+            <div class="flex flex-wrap -mx-4">
+                <div v-for="podcast in podcasts" :key="podcast.id" class="p-4 w-1/2 sm:w-1/4 md:w-1/6">
+                    <router-link :to="{name:'podcasts.show', params:{id:podcast.id}}" class="mb-2 block">
+                        <img class="w-full block shadow-md" :src="podcast.logo" :alt="podcast.title">
+                    </router-link>
+                    <router-link :to="{name:'podcasts.show', params:{id:podcast.id}}" class="block mb-1 no-underline font-bold truncate text-sm text-black">{{ podcast.title }}</router-link>
+                    <a :href="podcast.domain_url" target="_blank" class="block no-underline uppercase truncate text-xs text-grey-darker">{{ podcast.domain }}</a>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -8,13 +24,13 @@
     export default {
         data() {
             return {
-                latestEpisodes: [],
+                podcasts: [],
             };
         },
 
         created() {
-            axios.get(route('latest.index')).then((response) => {
-                this.latestEpisodes = response.data.data;
+            axios.get(route('podcasts.index')).then((response) => {
+                this.podcasts = response.data.data;
             });
         },
     }

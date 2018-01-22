@@ -23,3 +23,14 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+/**
+ * Service Worker
+ */
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').then(() => {}, (err) => {
+            console.log("Service Worker:", err);
+        });
+    });
+}

@@ -22,8 +22,6 @@ class PodcastFetch extends Command
      */
     public function handle()
     {
-        $start = microtime(true);
-
         Podcast::when($this->option('id'), function($query){
             $query->where('id', $this->option('id'));
         })->get()->when(true, function($podcasts){
@@ -36,9 +34,5 @@ class PodcastFetch extends Command
         });
 
         $this->bar->finish();
-        $time = number_format(microtime(true)-$start, 2);
-        $newItems = Episode::where('created_at', '>', now()->subSeconds($time+10))->count();
-        $this->line("\nNew: {$newItems}");
-        $this->line("Duration: {$time} sec");
     }
 }

@@ -6,7 +6,7 @@ use App\Http\Resources\PodcastResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PodcastSubscriptionController
+class SubscriptionController
 {
     /**
      * Display a listing of the resource.

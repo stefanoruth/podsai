@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\EpisodeResource;
-use App\Episode;
 
-class LatestEpisodeController
+class MainController
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +13,10 @@ class LatestEpisodeController
      */
     public function index()
     {
-        return EpisodeResource::collection(Episode::with('podcast')->sortLatest()->take(10)->get());
+        if (\Auth::check()) {
+            return view('app');
+        }
+
+        return view('welcome');
     }
 }

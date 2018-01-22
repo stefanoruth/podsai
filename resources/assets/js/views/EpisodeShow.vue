@@ -23,7 +23,7 @@
     import {EventBus} from '../EventBus.js';
 
     export default {
-        props: ['id'],
+        props: ['episodeId', 'podcastId'],
 
         data() {
             return {
@@ -32,7 +32,7 @@
         },
 
         mounted() {
-            axios.get(route('episodes.show', this.id)).then((response) => {
+            axios.get(route('episodes.show', {episode: this.id, podcast: this.podcast})).then((response) => {
                 this.episode = response.data.data;
             });
         },
