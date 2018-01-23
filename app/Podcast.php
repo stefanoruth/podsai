@@ -4,12 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Scout\Searchable;
 
 class Podcast extends Model
 {
-    use Searchable;
-
     /**
      * The attributes that aren't mass assignable.
      *
@@ -60,19 +57,5 @@ class Podcast extends Model
     public function logo()
     {
         return url("storage/logos/{$this->logo}");
-    }
-
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array
-     */
-    public function toSearchableArray()
-    {
-        return [
-            'title'       => $this->title,
-            'domain'      => $this->meta->domain ?? null,
-            'description' => $this->meta->description ?? null,
-        ];
     }
 }

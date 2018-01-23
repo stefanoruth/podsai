@@ -26,7 +26,9 @@
                     </div>
                     <div v-for="episode in visibleEpisodes" :key="episode.id" class="flex border-b items-center py-2">
                         <div class="text-grey-dark px-3" v-if="episode.number">{{ episode.number }}</div>
-                        <div class="pr-2 flex-1">{{ episode.title }}</div>
+                        <div class="pr-2 flex-1">
+                            <router-link :to="{name:'episodes.show', params:{podcastId: podcast.id, episodeId: episode.id}}">{{ episode.title }}</router-link>
+                        </div>
                         <div class="pr-2 text-grey-dark">45 min</div>
                         <div class="pr-4 text-grey-dark">{{ episode.published_at }}</div>
                         <div>
@@ -55,7 +57,7 @@
         computed: {
             visibleEpisodes: function() {
                 if (this.recentOnly) {
-                    return this.podcast.episodes.splice(0,5);
+                    return this.podcast.episodes.slice(0,5);
                 }
 
                 return this.podcast.episodes;

@@ -4,12 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Scout\Searchable;
 
 class Episode extends Model
 {
-    //use Searchable;
-
     /**
      * The attributes that aren't mass assignable.
      *
@@ -85,18 +82,5 @@ class Episode extends Model
         } else {
             $this->attributes['meta'] = json_encode($filtered);
         }
-    }
-
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array
-     */
-    public function toSearchableArray()
-    {
-        return [
-            'title'       => $this->title,
-            'description' => $this->meta->description ?? null,
-        ];
     }
 }

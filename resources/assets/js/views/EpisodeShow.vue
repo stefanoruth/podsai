@@ -1,20 +1,16 @@
 <template>
-    <div class="mx-auto max-w-md p-4" v-if="episode != null">
-        <div class="w-full shadow rounded bg-white">
-            <div class="flex">
-                <div class="h-32 w-32 flex-none bg-cover overflow-hidden" v-bind:style="{'background-image':'url('+episode.podcast.logo+')'}"></div>
-                <div class="p-4">
-                    <div class="mb-2">
-                        <div class="text-lg font-bold mb-2">{{ episode.title }}</div>
-                        <div>{{ episode.length }}</div>
-                    </div>
-                    <div>
-                        <button class="bg-grey hover:bg-grey-dark text-white font-bold py-1 px-2 rounded" @click="playEpisode(episode)">Play</button>
-                    </div>
-                </div>
+    <div v-if="episode != null" class="mx-auto max-w-2xl px-4 py-8">
+        <div class="md:flex">
+            <div class="flex justify-center md:block md:pr-8 md:w-1/4 mb-4">
+                <img class="h-32 w-32 md:h-auto md:w-full shadow-md" :src="episode.podcast.logo">
             </div>
-            <div class="p-4 content" v-if="episode.show_notes != null" v-html="episode.show_notes"></div>
-            <div class="p-4 content" v-else v-html="episode.description"></div>
+            <div class="flex-1">
+                <div class="text-3xl text-black font-bold mb-4">{{ episode.title }}</div>
+                <div class="mb-4">
+                    <button class="btn" @click="playEpisode(episode)">Listen</button>
+                </div>
+                <div class="content" v-html="episode.show_notes"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -32,7 +28,7 @@
         },
 
         mounted() {
-            axios.get(route('episodes.show', {episode: this.id, podcast: this.podcast})).then((response) => {
+            axios.get(route('episodes.show', {episode: this.episodeId, podcast: this.podcastId})).then((response) => {
                 this.episode = response.data.data;
             });
         },

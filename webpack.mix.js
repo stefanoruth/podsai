@@ -14,10 +14,11 @@ let tailwindcss = require('tailwindcss');
 
 mix.js('resources/assets/js/app.js', 'public')
    .sass('resources/assets/sass/app.scss', 'public')
+   .disableSuccessNotifications()
    .options({
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.js') ],
-  });
+    });
 
 if (mix.inProduction()) {
     mix.version();

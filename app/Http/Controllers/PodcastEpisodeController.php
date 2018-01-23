@@ -14,8 +14,8 @@ class PodcastEpisodeController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($podcast, $episode)
     {
-        return EpisodeResource::make(Episode::with('podcast')->findOrFail($id));
+        return EpisodeResource::make(Episode::with('podcast')->where('podcast_id', $podcast)->findOrFail($episode));
     }
 }
