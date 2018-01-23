@@ -20,7 +20,7 @@
                     <div class="border-b pb-2">
                         <template v-if="recentOnly">
                             <span class="font-bold mr-2">Recent Episodes</span>
-                            <a class="no-underline text-blue hover:text-blue-darker hover:underline" v-if="recentOnly" @click="recentOnly = false" href="#">View all</a>
+                            <button class="no-underline text-blue hover:text-blue-darker hover:underline" v-if="recentOnly" @click="recentOnly = false">View all</button>
                         </template>
                         <span v-else class="font-bold">All episodes</span>
                     </div>
