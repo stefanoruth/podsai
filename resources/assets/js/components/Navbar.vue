@@ -12,8 +12,8 @@
             </div>
             <div class="md:flex md:items-stretch md:flex-no-shrink md:flex-grow border-b md:border-b-0" v-bind:class="{'hidden':!mobileMenu}">
                 <div class="md:flex md:items-stretch md:justify-end ml-auto">
-                    <router-link :to="{name:'podcasts.index'}" class="flex-no-grow flex-no-shrink relative py-4 px-2 md:py-8 md:px-4 leading-normal text-black no-underline flex items-center hover:bg-orange hover:text-white">Podcasts</router-link>
-                    <router-link :to="{name:'episodes.latest'}" class="flex-no-grow flex-no-shrink relative py-4 px-2 md:py-8 md:px-4 leading-normal text-black no-underline flex items-center hover:bg-orange hover:text-white">Episodes</router-link>
+                    <router-link :to="{name:'podcasts.index'}" @click.native="mobileMenu = false" class="flex-no-grow flex-no-shrink relative py-4 px-2 md:py-8 md:px-4 leading-normal text-black no-underline flex items-center hover:bg-orange hover:text-white">Podcasts</router-link>
+                    <router-link :to="{name:'episodes.latest'}" @click.native="mobileMenu = false" class="flex-no-grow flex-no-shrink relative py-4 px-2 md:py-8 md:px-4 leading-normal text-black no-underline flex items-center hover:bg-orange hover:text-white">Episodes</router-link>
                     <a :href="logout" class="flex-no-grow flex-no-shrink relative py-4 px-2 md:py-8 md:px-4 leading-normal text-black no-underline flex items-center hover:bg-orange hover:text-white">Logout</a>
                 </div>
             </div>
@@ -38,5 +38,13 @@
                 return route('logout');
             },
         },
+
+        mounted() {
+            document.querySelector('main').addEventListener('click', e => {
+                if (this.mobileMenu) {
+                    this.mobileMenu = false;
+                }
+            });
+        }
     }
 </script>
