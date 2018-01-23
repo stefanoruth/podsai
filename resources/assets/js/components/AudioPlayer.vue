@@ -56,6 +56,16 @@
         mounted() {
             this.player = document.getElementById('audio-player');
             this.init();
+
+            
+            document.addEventListener('keydown', e => {
+                if (e.keyCode == 0 || e.keyCode == 32) {
+                    if (e.target == document.body) {
+                        e.preventDefault();
+                    }
+                    this.togglePlay();
+                }
+            });
         },
 
         methods: {
