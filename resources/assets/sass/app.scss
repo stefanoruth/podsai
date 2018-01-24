@@ -8,10 +8,33 @@
     }
 }
 
+.menu-item {
+    @apply
+        .flex
+        .items-center
+        .flex-no-grow
+        .flex-no-shrink
+        .relative
+        .py-4
+        .px-2
+        .leading-normal
+        .text-black
+        .no-underline
+        .whitespace-no-wrap;
+
+    &:hover {
+        @apply .bg-orange .text-white;
+    }
+}
+
 @tailwind utilities;
 
 .router-link-exact-active {
     // Menu item active
+}
+
+.pin-t-100 {
+    top: 100%;
 }
 
 @import 'content';
