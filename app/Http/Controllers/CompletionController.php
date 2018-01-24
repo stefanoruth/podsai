@@ -24,7 +24,7 @@ class CompletionController
             ],
         ]);
 
-        Auth::user()->episodeCompletions()->create([
+        Auth::user()->episodes()->create([
             'episode_id' => request('id'),
         ]);
 
@@ -41,7 +41,7 @@ class CompletionController
      */
     public function show($id)
     {
-        $completion = Auth::user()->episodeCompletions()->where('episode_id', $id)->first();
+        $completion = Auth::user()->episodes()->where('episode_id', $id)->first();
 
         if (is_null($completion)) {
             return;
@@ -68,7 +68,7 @@ class CompletionController
             $update = ['time' => request('time')];
         }
 
-        Auth::user()->episodeCompletions()->updateOrCreate(['episode_id' => $id], $update);
+        Auth::user()->episodes()->updateOrCreate(['episode_id' => $id], $update);
     }
 
     /**

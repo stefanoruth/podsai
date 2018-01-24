@@ -39,7 +39,7 @@ class User extends Authenticatable
      * Relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function episodeCompletions()
+    public function episodes()
     {
         return $this->hasMany(EpisodeCompletion::class);
     }
@@ -65,5 +65,14 @@ class User extends Authenticatable
             ->whereIn('podcast_id', $this->podcasts()->pluck('id'))
             ->orderBy('published_at', 'DESC')
             ->take($count)->get();
+    }
+
+    /**
+     * Resizes the users avatar image
+     * @return string
+     */
+    public function getAvatarAttribute()
+    {
+        return sprintf('%s?sz=200', $this->image);
     }
 }

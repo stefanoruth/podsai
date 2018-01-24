@@ -21,7 +21,9 @@ class PodcastResource extends Resource
             'domain'         => str_replace('www.', '', parse_url($this->meta->domain, PHP_URL_HOST)),
             'domain_url'     => $this->meta->domain,
             'description'    => $this->meta->description,
-            'subscribed'     => !is_null($this->subscription),
+            'subscribed'     => $this->when($this->relationLoaded('subscription'), function(){
+                return !is_null($this->subscription);
+            }),
             'episodes_count' => $this->when(isset($this->episodes_count), $this->episodes_count),
             'episodes'       => EpisodeResource::collection($this->whenLoaded('episodes')),
         ];

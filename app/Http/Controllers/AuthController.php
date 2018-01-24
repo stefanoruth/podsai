@@ -33,6 +33,7 @@ class AuthController
         ], [
             'name' => $socialiteUser->getName(),
             'token' => $socialiteUser->token,
+            'image' => $socialiteUser->avatar_original,
         ]);
 
         // Remeber login
@@ -53,6 +54,6 @@ class AuthController
 
         $request->session()->invalidate();
 
-        return redirect('/welcome');
+        return redirect('/');
     }
 }

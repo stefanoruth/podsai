@@ -1,5 +1,5 @@
 <?php
-\Auth::loginUsingId(1);
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,4 +26,5 @@ Route::middleware('auth')->prefix('api')->group(function () {
     Route::resource('podcasts', 'PodcastController')->only('index', 'store', 'show');
     Route::resource('podcasts/{podcast}/episodes', 'PodcastEpisodeController')->only('show');
     Route::resource('episodes/latest', 'LatestEpisodeController')->only('index');
+    Route::resource('users', 'UserController')->only('index');
 });

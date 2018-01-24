@@ -31,6 +31,7 @@ const app = new Vue({
             {path:'/podcasts/:id', name:'podcasts.show', component: require('./views/PodcastShow'), props: true},
             {path:'/podcasts/:podcastId/episodes/:episodeId', name:'episodes.show', component: require('./views/EpisodeShow'), props: true},
             {path:'/new-podcast', name:'podcasts.create', component: require('./views/AddPodcast')},
+            {path:'/profile', name:'profile', component: require('./views/Profile')},
         ],
     }),
 });
