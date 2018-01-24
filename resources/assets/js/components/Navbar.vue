@@ -12,16 +12,16 @@
             </div>
             <div class="md:flex md:items-stretch md:flex-no-shrink md:flex-grow border-b md:border-b-0" v-bind:class="{'hidden':!mobileMenu}">
                 <div class="md:flex md:items-stretch md:justify-end ml-auto">
-                    <router-link :to="{name:'podcasts.index'}" @click.native="mobileMenu = false" class="menu-item md:py-8 md:px-4">Podcasts</router-link>
-                    <router-link :to="{name:'episodes.latest'}" @click.native="mobileMenu = false" class="menu-item md:py-8 md:px-4">Episodes</router-link>
+                    <router-link :to="{name:'podcasts.index'}" @click.native="mobileMenu = false" class="menu-item md:py-8">Podcasts</router-link>
+                    <router-link :to="{name:'episodes.latest'}" @click.native="mobileMenu = false" class="menu-item md:py-8">Episodes</router-link>
                     <div class="relative items-stretch md:flex group cursor-pointer">
-                        <div class="menu-item md:py-8 md:px-4">
+                        <div class="menu-item md:py-8">
                             <span class="pr-1">Account</span>
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>    
+                            <svg class="fill-current h-4 w-4 pt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>    
                         </div>
                         <div class="md:absolute pin-r pin-t-100 md:hidden min-w-full group-hover:block bg-white md:shadow z-20 md:rounded-b py-1">
-                            <a href="#" class="menu-item px-4">Profile</a>
-                            <a :href="logout" class="menu-item px-4">Logout</a>
+                            <a href="#" class="menu-item px-8 md:px-4">Profile</a>
+                            <a :href="logout" class="menu-item px-8 md:px-4">Logout</a>
                         </div>
                     </div>
                     
