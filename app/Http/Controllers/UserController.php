@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\EpisodeCompletion;
 
 class UserController
 {
@@ -15,9 +16,11 @@ class UserController
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
-        return UserResource::make(User::withCount('episodes')->with(['episodes' => function($q){
-            $q->where('completed_at', '>', now()->subMonth())->selectRaw('COUNT(completed_at) as completed_count')->addSelect('completed_at', 'user_id')->groupBy('completed_at')->groupBy('user_id');
+    {
+        return UserResource::make(User::withCount('episodes')->with(['episodes' => function($query) {
+            $query->whereYear('completed_at', date('Y'))
+                ->groupBy(\DB::raw('WEEK(completed_at, 3)'), 'user_id')
+                ->selectRaw('COUNT(completed_at) as count, WEEK(completed_at, 3) as week, user_id');
         }])->with('podcasts')->findOrFail(Auth::id()));
     }
 }

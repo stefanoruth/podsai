@@ -73,6 +73,6 @@ class User extends Authenticatable
      */
     public function getAvatarAttribute()
     {
-        return sprintf('%s?sz=200', $this->image);
+        return sprintf('%s?sz=256', $this->image);
     }
 }
