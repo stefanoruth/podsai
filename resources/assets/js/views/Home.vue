@@ -1,8 +1,10 @@
 <template>
     <div>
-        <div class="bg-orange p-8 border-b border-t">
-            <div class="text-3xl font-bold">Podcasting for Programmers</div>
-            <div class="text-xl text-grey">The best place to discover and publish pdcasts about building software.</div>
+        <div class="bg-gradiant px-8 py-16 border-b border-t">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-3xl font-bold">Podcasting for everyone</div>
+                <div class="text-xl text-grey">The best place to discover and listen to podcasts.</div>
+            </div>
         </div>
 
         <div class="p-4 max-w-2xl mx-auto">

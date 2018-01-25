@@ -27,6 +27,18 @@
     }
 }
 
+.bg-gradiant {
+    background: linear-gradient(307deg, #4dc0b5, #f6993f);
+    background-size: 400% 400%;
+    animation: bgGradiant 10s ease infinite;
+}
+
+@keyframes bgGradiant { 
+    0%{background-position:0% 4%}
+    50%{background-position:100% 97%}
+    100%{background-position:0% 4%}
+}
+
 @tailwind utilities;
 
 .router-link-exact-active {
