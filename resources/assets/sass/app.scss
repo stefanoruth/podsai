@@ -8,6 +8,14 @@
     }
 }
 
+.btn-primary {
+    @apply .border .border-orange .bg-orange .px-2 .py-1 .text-white .rounded;
+
+    &:hover {
+        @apply .border-orange-dark .bg-orange-dark;
+    }
+}
+
 .menu-item {
     @apply
         .flex
@@ -28,7 +36,7 @@
 }
 
 .bg-gradiant {
-    background: linear-gradient(307deg, #4dc0b5, #f6993f);
+    background: linear-gradient(307deg, config('colors.orange-dark'), config('colors.orange-light'));
     background-size: 400% 400%;
     animation: bgGradiant 10s ease infinite;
 }

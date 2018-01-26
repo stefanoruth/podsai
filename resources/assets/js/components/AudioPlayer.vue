@@ -59,6 +59,10 @@
 
             
             document.addEventListener('keydown', e => {
+                if (e.target.localName == 'input') {
+                    return;
+                }
+
                 if (e.keyCode == 0 || e.keyCode == 32) {
                     if (e.target == document.body) {
                         e.preventDefault();

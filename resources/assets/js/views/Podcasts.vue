@@ -1,7 +1,10 @@
 <template>
     <div>
         <div class="p-4 max-w-2xl mx-auto">
-            <div class="text-3xl mb-2">All Podcasts</div>
+            <div class="flex justify-between mb-4">
+                <div class="text-3xl mb-2">All Podcasts</div>
+                <button class="btn-primary" @click="modal = true">Find a new Podcast</button>
+            </div>
             <div class="flex flex-wrap -mx-4">
                 <div v-for="podcast in podcasts" :key="podcast.id" class="p-4 w-1/2 sm:w-1/4 md:w-1/6">
                     <router-link :to="{name:'podcasts.show', params:{id:podcast.id}}" class="mb-2 block">
@@ -12,6 +15,8 @@
                 </div>
             </div>
         </div>
+
+       <new-podcast v-if="modal" @close="modal = false"></new-podcast>
     </div>
 </template>
 
@@ -20,6 +25,7 @@
         data() {
             return {
                 podcasts: [],
+                modal: false,
             };
         },
 
@@ -27,6 +33,10 @@
             axios.get(route('podcasts.index')).then((response) => {
                 this.podcasts = response.data.data;
             });
+        },
+
+        components: {
+            'new-podcast': require('../components/NewPodcast'),
         },
     }
 </script>
