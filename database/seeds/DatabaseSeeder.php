@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             'http://twentypercent.fm/rss',
             'http://feeds.feedburner.com/PhpRoundtable',
             'http://www.dr.dk/mu/Feed/mads-monopolet-podcast.xml?format=podcast&limit=500',
-            'https://feed.syntax.fm/rss',
             'https://rss.simplecast.com/podcasts/1356/rss',
         ];
 

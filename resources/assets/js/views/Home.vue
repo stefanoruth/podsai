@@ -31,7 +31,7 @@
         },
 
         created() {
-            axios.get(route('podcasts.index')).then((response) => {
+            axios.get(route('top.index')).then((response) => {
                 this.podcasts = response.data.data;
             });
         },

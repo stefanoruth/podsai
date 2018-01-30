@@ -23,6 +23,7 @@ Route::get('login/callback', 'AuthController@handleProviderCallback')->middlewar
 Route::middleware('auth')->prefix('api')->group(function () {
     Route::resource('subscriptions', 'SubscriptionController')->only('index', 'store', 'destroy');
     Route::resource('completions', 'CompletionController')->only('store', 'show', 'update', 'destroy');
+    Route::resource('podcasts/top', 'TopPodcastController')->only('index');
     Route::resource('podcasts', 'PodcastController')->only('index', 'store', 'show');
     Route::resource('podcasts/{podcast}/episodes', 'PodcastEpisodeController')->only('show');
     Route::resource('episodes/latest', 'LatestEpisodeController')->only('index');

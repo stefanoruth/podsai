@@ -1,7 +1,7 @@
 @tailwind preflight;
 
 .btn {
-    @apply .border .px-2 .py-1 .text-grey-dark .rounded;
+    @apply .border .px-2 .py-1 .text-grey-dark .rounded .no-underline .select-none;
 
     &:hover {
         @apply .text-white .bg-orange .border-orange;
@@ -9,7 +9,7 @@
 }
 
 .btn-primary {
-    @apply .border .border-orange .bg-orange .px-2 .py-1 .text-white .rounded;
+    @apply .border .border-orange .bg-orange .px-2 .py-1 .text-white .rounded .no-underline .select-none;
 
     &:hover {
         @apply .border-orange-dark .bg-orange-dark;
@@ -33,18 +33,6 @@
     &:hover {
         @apply .bg-orange .text-white;
     }
-}
-
-.bg-gradiant {
-    background: linear-gradient(307deg, config('colors.orange-dark'), config('colors.orange-light'));
-    background-size: 400% 400%;
-    animation: bgGradiant 10s ease infinite;
-}
-
-@keyframes bgGradiant { 
-    0%{background-position:0% 4%}
-    50%{background-position:100% 97%}
-    100%{background-position:0% 4%}
 }
 
 @tailwind utilities;

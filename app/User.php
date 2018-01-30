@@ -55,16 +55,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Fetches the latest podcast episodes for a user.
-     * @param  integer $count
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminte\Database\Query\Builder
      */
-    public function latestsEpisodes($count = 10)
+    public function scopeLatestsEpisodes()
     {
         return Episode::with('podcast', 'userCompletion')
             ->whereIn('podcast_id', $this->podcasts()->pluck('id'))
-            ->orderBy('published_at', 'DESC')
-            ->take($count)->get();
+            ->orderBy('published_at', 'DESC');
     }
 
     /**
