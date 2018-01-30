@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div v-if="user != null" class="px-4 py-8 max-w-2xl mx-auto md:flex">
         <div class="flex justify-center md:block md:pr-8 md:w-1/4 mb-4">
             <img class="h-32 w-32 md:h-auto md:w-full shadow-md" :src="user.avatar">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import Chart from 'Chart.js';
+    var Chart = require('chart.js');
 
     export default {
         data() {
