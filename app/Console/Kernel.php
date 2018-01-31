@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('podcast:fetch')->hourly();
+        $schedule->command('podcast:fetch')->cron('0 */2 * * *');
     }
 
     /**
