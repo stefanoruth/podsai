@@ -22,16 +22,19 @@ Vue.component('modal', require('./components/Modal'));
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-    router: new VueRouter({
-        routes: [
-            {path:'/', component: require('./views/Home')},
-            {path:'/episodes/latest', name:'episodes.latest', component: require('./views/LatestEpisodes')},
-            {path:'/podcasts', name:'podcasts.index', component: require('./views/Podcasts')},
-            {path:'/podcasts/:id', name:'podcasts.show', component: require('./views/PodcastShow'), props: true},
-            {path:'/podcasts/:podcastId/episodes/:episodeId', name:'episodes.show', component: require('./views/EpisodeShow'), props: true},
-            {path:'/profile', name:'profile', component: require('./views/Profile')},
-        ],
-    }),
-});
+if(document.getElementById('app')){
+    const app = new Vue({
+        el: '#app',
+        router: new VueRouter({
+            routes: [
+                { path: '/', component: require('./views/Home') },
+                { path: '/episodes/latest', name: 'episodes.latest', component: require('./views/LatestEpisodes') },
+                { path: '/podcasts', name: 'podcasts.index', component: require('./views/Podcasts') },
+                { path: '/podcasts/:id', name: 'podcasts.show', component: require('./views/PodcastShow'), props: true },
+                { path: '/podcasts/:podcastId/episodes/:episodeId', name: 'episodes.show', component: require('./views/EpisodeShow'), props: true },
+                { path: '/profile', name: 'profile', component: require('./views/Profile') },
+            ],
+        }),
+    });
+}
+

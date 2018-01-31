@@ -16,5 +16,7 @@
 </head>
 <body class="font-sans bg-grey-lightest">
     @yield('body')
+    @routes
+    <script async src="{{ mix('app.js') }}"></script>
 </body>
 </html>

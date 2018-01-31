@@ -8,7 +8,4 @@
 			<router-view></router-view>
 		</main>
 	</div>
-
-	@routes
-	<script async src="{{ mix('app.js') }}"></script>
 @stop
