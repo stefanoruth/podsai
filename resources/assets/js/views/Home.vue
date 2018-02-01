@@ -3,7 +3,7 @@
         <div class="bg-orange px-8 py-12 border-b border-t">
             <div class="max-w-2xl mx-auto">
                 <div class="text-3xl text-white font-bold">Podcasting for everyone</div>
-                <div class="text-xl text-white">The best place to discover and listen to podcasts.</div>
+                <div class="text-xl text-white">A great place to discover and listen to podcasts.</div>
             </div>
         </div>
 
