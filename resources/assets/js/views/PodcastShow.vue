@@ -1,39 +1,43 @@
 <template>
-    <div v-if="podcast != null" class="mx-auto max-w-2xl px-4 py-8">
+    <div v-if="podcast != null" class="mx-auto max-w-2xl md:px-4 py-8">
         <div class="md:flex">
             <div class="flex justify-center md:block md:pr-8 md:w-1/4 mb-4">
-                <img class="h-32 w-32 md:h-auto md:w-full shadow-md" :src="podcast.logo">
+                <podcast-image :podcast="podcast" class="h-32 w-32 md:h-auto md:w-full"></podcast-image>
             </div>
             <div class="flex-1">
-                <div class="mb-8">
+                <div class="mb-8 text-center md:text-left bg-white p-4 shadow">
                     <div class="text-3xl text-black font-bold">{{ podcast.title }}</div>
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <a class="no-underline uppercase text-grey-darker text-sm" :href="podcast.domain_url" target="_blank">{{ podcast.domain }}</a>
                     </div>
                     <div class="mb-4">
                         <button class="py-1 px-3 border rounded" :class="{'bg-orange text-white border-orange': podcast.subscribed, 'hover:bg-orange hover:text-white hover:border-orange': !podcast.subscribed}" @click="subscribe">{{ podcast.subscribed ? 'Subscribed' : 'Subscribe' }}</button>
                     </div>
-                    <div class="text-grey">{{ podcast.description }}</div>
+                    <div class="">{{ podcast.description }}</div>
                 </div>
 
-                <div class="pb-8">
-                    <div class="border-b pb-2">
+                <div class="bg-white shadow">
+                    <div class="p-4 flex justify-between">
                         <template v-if="recentOnly">
                             <span class="font-bold mr-2">Recent Episodes</span>
-                            <button class="no-underline text-blue hover:text-blue-darker hover:underline" v-if="recentOnly" @click="recentOnly = false">View all</button>
+                            <button class="no-underline text-orange hover:text-orange-dark hover:underline" v-if="recentOnly" @click="recentOnly = false">View all</button>
                         </template>
                         <span v-else class="font-bold">All episodes</span>
                     </div>
-                    <div v-for="episode in visibleEpisodes" :key="episode.id" class="flex border-b items-center py-2">
-                        <div class="text-grey-dark px-3" v-if="episode.number">{{ episode.number }}</div>
-                        <div class="pr-2 flex-1">
-                            <router-link :to="{name:'episodes.show', params:{podcastId: podcast.id, episodeId: episode.id}}">{{ episode.title }}</router-link>
+                    <div v-for="episode in visibleEpisodes" :key="episode.id" class="flex border-t items-center py-2 px-4 hover:bg-grey-lighter">
+                        <div class="text-grey-dark mr-2" v-if="episode.number">{{ episode.number }}</div>
+                        <div class="flex-1 px-4 md:flex items-center">
+                            <div class="flex-1 mb-1 mr-2">
+                                <router-link class="no-underline text-black block" :to="{name:'episodes.show', params:{podcastId: podcast.id, episodeId: episode.id}}">{{ episode.title }}</router-link>
+                            </div>
+                            <div class="flex">
+                                <div class="pr-2 text-grey-dark text-right">{{ episode.length }}</div>
+                                <div class="pr-4 text-grey-dark text-right w-28">{{ episode.published_at }}</div>
+                            </div>
                         </div>
-                        <div class="pr-2 text-grey-dark">45 min</div>
-                        <div class="pr-4 text-grey-dark">{{ episode.published_at }}</div>
-                        <div>
-                            <button class="btn" @click="playEpisode(episode)">Listen</button>
-                        </div>
+                            <div class="">
+                                <button class="btn" @click="playEpisode(episode)">Listen</button>
+                            </div>
                     </div>
                 </div>
             </div>

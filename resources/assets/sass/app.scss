@@ -45,4 +45,20 @@
     top: 100%;
 }
 
+.badge {
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    @apply .bg-orange .absolute .text-white .h-16 .w-16;
+    right: -1px;
+    bottom: -1px;
+
+    span {
+        transform: rotate(-45deg);
+        display: block;
+        position: absolute;
+        bottom: 20px;
+        font-size: 11px;
+        right: -1px;
+    }
+}
+
 @import 'content';

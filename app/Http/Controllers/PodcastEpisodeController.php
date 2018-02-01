@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Episode;
 use App\Http\Resources\EpisodeResource;
-use Illuminate\Http\Request;
 
 class PodcastEpisodeController
 {
@@ -16,6 +15,6 @@ class PodcastEpisodeController
      */
     public function show($podcast, $episode)
     {
-        return EpisodeResource::make(Episode::with('podcast')->where('podcast_id', $podcast)->findOrFail($episode));
+        return EpisodeResource::make(Episode::with('podcast', 'userCompletion')->where('podcast_id', $podcast)->findOrFail($episode));
     }
 }

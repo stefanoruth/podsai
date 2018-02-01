@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class Episode extends Model
@@ -50,7 +51,7 @@ class Episode extends Model
         return $this->hasMany(EpisodeCompletion::class);
     }
 
-    /** 
+    /**
      * Relationship
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -59,7 +60,7 @@ class Episode extends Model
         return $this->hasOne(EpisodeCompletion::class)->where('user_id', Auth::id());
     }
 
-    /** 
+    /**
      * Sort episodes by newest first
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
@@ -82,5 +83,16 @@ class Episode extends Model
         } else {
             $this->attributes['meta'] = json_encode($filtered);
         }
+    }
+
+    public function getDurationAttribute()
+    {
+        $length = data_get($this->meta, 'length');
+
+        if (substr_count($length, ':') == 1) {
+            $length = '00:'.$length;
+        }
+
+        return Carbon::parse($length)->diffInMinutes(Carbon::parse(date('Y-m-d 00:00:00'))) . ' min';
     }
 }

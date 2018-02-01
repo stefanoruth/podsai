@@ -15,6 +15,8 @@ Vue.config.productionTip = false
 Vue.component('audio-player', require('./components/AudioPlayer'));
 Vue.component('navbar', require('./components/Navbar'));
 Vue.component('modal', require('./components/Modal'));
+Vue.component('episode-image', require('./components/EpisodeImage'));
+Vue.component('podcast-image', require('./components/PodcastImage'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

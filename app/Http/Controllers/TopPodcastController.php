@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Resources\PodcastResource;
 use App\Podcast;
 
@@ -15,6 +14,6 @@ class TopPodcastController
      */
     public function index()
     {
-        return PodcastResource::collection(Podcast::withCount('users')->has('users')->orderBy('users_count', 'DESC')->take(12)->get());
+        return PodcastResource::collection(Podcast::with('subscription')->withCount('users')->has('users')->orderBy('users_count', 'DESC')->take(12)->get());
     }
 }

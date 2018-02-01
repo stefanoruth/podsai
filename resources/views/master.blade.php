@@ -14,7 +14,7 @@
     <meta name="theme-color" content="#f6993f">
     <link rel="stylesheet" href="{{ mix('app.css') }}">
 </head>
-<body class="font-sans bg-grey-lightest">
+<body class="font-sans bg-grey-lightest text-black">
     @yield('body')
     @routes
     <script async src="{{ mix('app.js') }}"></script>

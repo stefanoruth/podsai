@@ -27,7 +27,7 @@ class EpisodeResource extends Resource
             'number'            => $this->transform(data_get($this->meta, 'number'), function ($value) {
                 return (int) $value;
             }),
-            'length'            => data_get($this->meta, 'length'),
+            'length'            => $this->duration,
             'show_notes'        => data_get($this->meta, 'show_notes'),
             'podcast'           => PodcastResource::make($this->whenLoaded('podcast')),
             'completion'        => EpisodeCompletionResource::make($this->whenLoaded('userCompletion')),

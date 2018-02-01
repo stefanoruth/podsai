@@ -6,7 +6,6 @@ use App\Http\Resources\PodcastResource;
 use App\Jobs\UpdatePodcast;
 use App\Podcast;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class PodcastController
 {
@@ -17,9 +16,7 @@ class PodcastController
      */
     public function index()
     {
-        return PodcastResource::collection(Podcast::with(['subscription', 'episodes' => function ($query) {
-            $query->with('userCompletions', 'podcast')->sortLatest();
-        }])->get());
+        return PodcastResource::collection(Podcast::with('subscription')->orderBy('title', 'ASC')->get());
     }
 
     /**

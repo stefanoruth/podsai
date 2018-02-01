@@ -6,7 +6,7 @@
         <div>
             <div v-for="episode in episodes" :key="episode.id" class="flex mb-4">
                 <div class="w-1/4 pr-4">
-                    <img :src="episode.podcast.logo">
+                    <episode-image :episode="episode"></episode-image>
                 </div>
                 <div class="w-3/4 flex flex-col justify-center">
                     <div class="text-sm text-grey-dark mb-1">{{ episode.published_at }}</div>

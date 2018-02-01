@@ -16,7 +16,7 @@ class EpisodeCompletionResource extends Resource
     {
         return [
             'duration'  => $this->time ?? 0,
-            'completed' => !is_null($this->completed_at),
+            'completed' => true,//!is_null($this->completed_at),
             'episode'   => EpisodeResource::make($this->whenLoaded('episode')),
         ];
     }
