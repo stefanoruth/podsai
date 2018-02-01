@@ -2,7 +2,7 @@
     <div>
         <div class="p-4 max-w-2xl mx-auto">
             <div class="flex justify-between mb-4">
-                <div class="text-3xl mb-2">All Podcasts</div>
+                <div class="text-3xl mb-2 mr-4">All Podcasts</div>
                 <button class="btn-primary" @click="modal = true">Find a new Podcast</button>
             </div>
             <div class="flex flex-wrap -mx-4">
