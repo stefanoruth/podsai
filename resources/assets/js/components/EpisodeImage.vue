@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <img class="block h-32 w-32 md:h-auto md:w-full shadow-md" :src="episode.podcast.logo">
+        <img class="block w-32 md:w-full shadow-md" :src="episode.podcast.logo">
         <div v-show="episode.completion !== null && episode.completion.completed" class="absolute pin flex justify-center items-center">
             <div class="bg-orange opacity-75 absolute pin"></div>
             <svg class="fill-current text-white z-10 h-24 w-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg>
