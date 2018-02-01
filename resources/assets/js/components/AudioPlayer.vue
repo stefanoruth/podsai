@@ -1,27 +1,30 @@
 <template>
-    <div class="fixed pin-b pin-x bg-grey" v-show="episode != null">
-        <div class="block w-full" v-if="episode != null">
-            <div class="h-4 w-full block border-b border-grey-lighter cursor-pointer" id="progress-bar" @click="setTime">
-                <span class="bg-grey-darker block h-full" :style="{width: barDuration}"></span>
-            </div>
-            <div class="flex">
-                <img class="w-12 h-12 m-2 border" :src="episode.podcast.logo">
-                <div class="m-2 flex-1 flex">
-                    <div class="flex-1">
-                        <div class="text-sm">{{ humanTime }} / {{ humanLength }}</div>
-                        <div class="text-lg">{{ episode.title }}</div>
+    <div class="bg-white shadow border-t">
+        <div class="flex" v-if="episode">
+            <div class="flex-1 px-2 py-1">
+                <div class="flex items-center mb-1">
+                    <div class="select-none text-sm">{{ humanTime }}</div>
+                    <div class="flex-1 px-2">
+                        <div class="h-1 w-full rounded cursor-pointer" id="progress-bar" @click="setTime">
+                            <span class="bg-orange block h-full" :style="{width: barDuration}"></span>
+                        </div>
                     </div>
-                    <div>
-                        <button @click="togglePlay()" class="h-12 w-12">
-                            <svg v-show="isPlaying" class="h-full w-full fill-current text-grey-darkest" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/></svg>
-                            <svg v-show="!isPlaying" class="h-full w-full fill-current text-grey-darkest" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
-                        </button>
-                    </div>
+                    <div class="select-none text-sm">{{ humanLength }}</div>
                 </div>
+                <div class="flex justify-center items-center">
+                    <div class="mr-1">{{ episode.title }}</div>
+                    <div class="text-xs uppercase text-grey-darker">- {{ episode.podcast.title }}</div>
+                </div>
+            </div>
+            <div class="self-center border-l">
+                <button @click="togglePlay()" id="playButton" class="h-12 w-12">
+                    <svg v-show="isPlaying" class="h-full w-full fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/></svg>
+                    <svg v-show="!isPlaying" class="h-full w-full fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
+                </button>
             </div>
         </div>
         
-        <audio id="audio-player" :src="audio" style="display:none;"></audio>
+        <audio id="audio-player" :src="audio" class="hidden"></audio>
     </div>
 </template>
 
@@ -59,7 +62,7 @@
 
             
             document.addEventListener('keydown', e => {
-                if (e.target.localName == 'input') {
+                if (e.target.localName == 'input' || e.target.id == 'playButton') {
                     return;
                 }
 
@@ -105,7 +108,10 @@
             },
 
             setTime(event) {
-                this.player.currentTime = this.length / _.find(event.path, (item) => {return item.id == 'progress-bar';}).offsetWidth * event.layerX;
+                console.log(this.length);
+                console.log(_.find(event.path, (item) => {return item.id == 'progress-bar';}).offsetWidth);
+                console.log(event.offsetX, event);
+                this.player.currentTime = this.length / _.find(event.path, (item) => {return item.id == 'progress-bar';}).offsetWidth * event.offsetX;
             },
 
             init() {
