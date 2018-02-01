@@ -110,9 +110,6 @@
             },
 
             setTime(event) {
-                console.log(this.length);
-                console.log(_.find(event.path, (item) => {return item.id == 'progress-bar';}).offsetWidth);
-                console.log(event.offsetX, event);
                 this.player.currentTime = this.length / _.find(event.path, (item) => {return item.id == 'progress-bar';}).offsetWidth * event.offsetX;
             },
 
