@@ -5,15 +5,15 @@
                 <div class="flex items-center mb-1">
                     <div class="select-none text-sm">{{ humanTime }}</div>
                     <div class="flex-1 px-2">
-                        <div class="h-1 w-full rounded cursor-pointer" id="progress-bar" @click="setTime">
+                        <div class="h-1 w-full rounded cursor-pointer border" id="progress-bar" @click="setTime">
                             <span class="bg-orange block h-full" :style="{width: barDuration}"></span>
                         </div>
                     </div>
                     <div class="select-none text-sm">{{ humanLength }}</div>
                 </div>
-                <div class="flex justify-center items-center">
-                    <div class="mr-1">{{ episode.title }}</div>
-                    <div class="text-xs uppercase text-grey-darker">- {{ episode.podcast.title }}</div>
+                <div class="text-center">
+                    <span class="mr-1">{{ episode.title }}</span>
+                    <span class="text-xs uppercase text-grey-darker">- {{ episode.podcast.title }}</span>
                 </div>
             </div>
             <div class="self-center border-l">
