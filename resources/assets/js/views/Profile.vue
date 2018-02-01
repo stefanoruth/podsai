@@ -4,24 +4,26 @@
             <img class="h-32 w-32 md:h-auto md:w-full shadow-md" :src="user.avatar">
         </div>
         <div class="flex-1">
-            <div>
-                <div>{{ user.name }}</div>
-                <div>{{ user.email }}</div>
-                <div>Member Since: {{ user.joined }}</div>
+            <div class="bg-white p-4 shadow mb-4">
+                <div class="text-3xl font-bold">{{ user.name }}</div>
+                <div class="text-sm mb-4">{{ user.email }}</div>
+                <div class="text-sm">Member since: {{ user.joined }}</div>
             </div>
 
-            <div>
-                <div class="font-bold">Episodes Completed Per Week</div>
+            <div class="bg-white p-4 shadow mb-4">
+                <div class="font-bold text-xl">Episodes Completed Per Week</div>
                 <canvas ref="episodeChart" class="py-4"></canvas>
             </div>
 
-            <div>
-                <div class="font-bold">Subscriptions</div>
-                <div v-for="podcast in user.subscriptions" :key="podcast.id">
-                    <div>
-                        <router-link :to="{name:'podcasts.show', params:{id:podcast.id}}">{{ podcast.title }}</router-link>
-                    </div>
-                </div>
+            <div class="bg-white p-4 shadow">
+                <div class="font-bold text-xl mb-2">Subscriptions</div>
+                <ul class="list-reset">
+                    <li v-for="podcast in user.subscriptions" :key="podcast.id" class="mb-1">
+                        <router-link class="no-underline text-orange block hover:text-orange-dark hover:underline" :to="{name:'podcasts.show', params:{id:podcast.id}}">
+                            <div>{{ podcast.title }}</div>
+                        </router-link>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

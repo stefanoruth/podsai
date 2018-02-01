@@ -17,10 +17,12 @@ class UserController
      */
     public function index()
     {
-        return UserResource::make(User::withCount('episodes')->with(['episodes' => function($query) {
+        return UserResource::make(User::withCount('episodes')->with(['episodes' => function ($query) {
             $query->whereYear('completed_at', date('Y'))
                 ->groupBy(\DB::raw('WEEK(completed_at, 3)'), 'user_id')
                 ->selectRaw('COUNT(completed_at) as count, WEEK(completed_at, 3) as week, user_id');
-        }])->with('podcasts')->findOrFail(Auth::id()));
+        }])->with(['podcasts' => function ($query) {
+            $query->orderBy('title', 'ASC');
+        }])->findOrFail(Auth::id()));
     }
 }
