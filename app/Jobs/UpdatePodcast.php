@@ -39,7 +39,7 @@ class UpdatePodcast implements ShouldQueue
         
         $this->updatePodcast($feed);
 
-        collect($feed->xpath('/rss/channel/item'))->each(function($item){
+        collect($feed->xpath('/rss/channel/item'))->each(function ($item) {
             $this->updateEpisode($item);
         });
     }
@@ -83,6 +83,10 @@ class UpdatePodcast implements ShouldQueue
      */
     protected function updateEpisode($item)
     {
+        if (!isset($item->enclosure)) {
+            return;
+        }
+
         $itunes = $item->children('http://www.itunes.com/dtds/podcast-1.0.dtd');
 
         $this->podcast->episodes()->updateOrCreate([
@@ -92,7 +96,7 @@ class UpdatePodcast implements ShouldQueue
             'audio'        => $this->formatInput($item->enclosure->attributes()['url']),
             'published_at' => strtotime($item->pubDate),
             'meta'         => [
-                'length'      => value(function() use ($itunes){
+                'length'      => value(function () use ($itunes) {
                     $duration = $this->formatInput($itunes->duration);
 
                     if (strpos($duration, ':') === false) {
