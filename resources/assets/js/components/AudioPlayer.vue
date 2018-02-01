@@ -53,16 +53,18 @@
                 isPlaying: false,
                 duration: 0,
                 length: 0,
+                autoPlay: false,
             };
         },
 
         mounted() {
             this.player = document.getElementById('audio-player');
             this.init();
+            this.loadLastEpisode();
 
             
             document.addEventListener('keydown', e => {
-                if (e.target.localName == 'input' || e.target.id == 'playButton') {
+                if (e.target.localName == 'input' || e.target.localName == 'button') {
                     return;
                 }
 
@@ -127,7 +129,10 @@
                 });
                 this.player.addEventListener('loadeddata', () => {
                     this.length = parseInt(this.player.duration);
-                    this.player.play();
+                    if (this.autoPlay) {
+                        this.player.play();
+                        this.autoPlay = false;
+                    }
                 });
                 this.player.addEventListener('ended', () => {
                     this.isPlaying = false;
@@ -137,11 +142,27 @@
                     this.updateTime();
                 });
                 EventBus.$on('playEpisode', (episode) => {
+                    if (this.episode && this.episode.id == episode.id) {
+                        this.player.play();
+                        return;
+                    }
+
                     this.episode = episode;
+                    this.autoPlay = true;
                     this.audio = episode.audio;
                     this.loadDuration();
 
                     document.title = this.episode.title+" | Podsai";
+                });
+            },
+
+            loadLastEpisode() {
+                axios.get(route('completions.index')).then(res => {
+                    if (res.data != '') {
+                        this.episode = res.data.data.episode;
+                        this.audio = res.data.data.episode.audio;
+                        this.player.currentTime = res.data.data.duration;
+                    }
                 });
             },
         },

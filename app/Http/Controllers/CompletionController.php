@@ -6,9 +6,26 @@ use App\Episode;
 use App\Http\Resources\EpisodeCompletionResource;
 use App\Http\Resources\ListenResource;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\EpisodeResource;
 
 class CompletionController
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $completion = Auth::user()->episodes()->with('episode.podcast')->orderBy('updated_at', 'DESC')->take(1)->get()->where('completed_at', null)->first();
+
+        if (is_null($completion)) {
+            return;
+        }
+
+        return EpisodeCompletionResource::make($completion);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
