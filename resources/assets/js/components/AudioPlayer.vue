@@ -3,13 +3,13 @@
         <div class="flex" v-if="episode">
             <div class="flex-1 px-2 py-1">
                 <div class="flex items-center mb-1">
-                    <div class="select-none text-sm">{{ humanTime }}</div>
+                    <div class="select-none text-xs">{{ humanTime }}</div>
                     <div class="flex-1 px-2">
                         <div class="h-1 w-full rounded cursor-pointer border" id="progress-bar" @click="setTime">
                             <span class="bg-orange block h-full" :style="{width: barDuration}"></span>
                         </div>
                     </div>
-                    <div class="select-none text-sm">{{ humanLength }}</div>
+                    <div class="select-none text-xs">{{ humanLength }}</div>
                 </div>
                 <div class="text-center">
                     <span class="mr-1">{{ episode.title }}</span>
