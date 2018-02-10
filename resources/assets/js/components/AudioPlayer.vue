@@ -16,7 +16,19 @@
                     <span class="text-xs uppercase text-grey-darker">- {{ episode.podcast.title }}</span>
                 </div>
             </div>
-            <div class="self-center border-l">
+            <div class="border-l hidden md:flex items-center group relative">
+                <div class="h-10 w-10 p-2 cursor-pointer">
+                    <svg v-if="volume == 0"       class="h-full w-full fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M15 8.59l-2.12-2.13-1.42 1.42L13.6 10l-2.13 2.12 1.42 1.42L15 11.4l2.12 2.13 1.42-1.42L16.4 10l2.13-2.12-1.42-1.42L15 8.6zM4 7H0v6h4l5 5V2L4 7z"/></svg>
+                    <svg v-else-if="volume <= 40" class="h-full w-full fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M7 7H3v6h4l5 5V2L7 7zm8.54 6.54l-1.42-1.42a3 3 0 0 0 0-4.24l1.42-1.42a4.98 4.98 0 0 1 0 7.08z"/></svg>
+                    <svg v-else                   class="h-full w-full fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 7H1v6h4l5 5V2L5 7zm11.36 9.36l-1.41-1.41a6.98 6.98 0 0 0 0-9.9l1.41-1.41a8.97 8.97 0 0 1 0 12.72zm-2.82-2.82l-1.42-1.42a3 3 0 0 0 0-4.24l1.42-1.42a4.98 4.98 0 0 1 0 7.08z"/></svg>
+                </div>
+                <div class="invisible group-hover:visible absolute pin-b-100 bg-white shadow p-2 w-full flex justify-center">
+                    <div class="vertical-range-wrapper">
+                        <input v-model.number="volume" type="range" min="0" max="100" @change="setVolume" class="vertical-range">
+                    </div>
+                </div>
+            </div>
+            <div class="border-l flex items-center">
                 <button @click="togglePlay()" id="playButton" class="h-12 w-12">
                     <svg v-show="isPlaying" class="h-full w-full fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/></svg>
                     <svg v-show="!isPlaying" class="h-full w-full fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
@@ -54,6 +66,7 @@
                 duration: 0,
                 length: 0,
                 autoPlay: false,
+                volume: 100,
             };
         },
 
@@ -111,6 +124,10 @@
 
             setTime(event) {
                 this.player.currentTime = this.length / _.find(event.path, (item) => {return item.id == 'progress-bar';}).offsetWidth * event.offsetX;
+            },
+
+            setVolume() {
+                this.player.volume = this.volume / 100;
             },
 
             init() {

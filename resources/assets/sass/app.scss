@@ -45,6 +45,10 @@
     top: 100%;
 }
 
+.pin-b-100 {
+    bottom: 100%;
+}
+
 .badge {
     clip-path: polygon(100% 0, 0 100%, 100% 100%);
     @apply .bg-orange .absolute .text-white .h-16 .w-16;
@@ -59,6 +63,18 @@
         font-size: 11px;
         right: -1px;
     }
+}
+
+.vertical-range-wrapper {
+    width: 20px;
+    height: 150px;
+}
+
+.vertical-range {
+    transform: rotate(-90deg);
+    transform-origin: 75px 75px;
+    width: 150px;
+    height: 20px;
 }
 
 @import 'content';
