@@ -22,17 +22,18 @@ class PodcastFetch extends Command
      */
     public function handle()
     {
-        Podcast::when($this->option('id'), function($query){
+        Podcast::when($this->option('id'), function ($query) {
             $query->where('id', $this->option('id'));
-        })->get()->when(true, function($podcasts){
+        })->get()->when(true, function ($podcasts) {
             $this->bar = $this->output->createProgressBar($podcasts->count());
 
             return $podcasts;
-        })->each(function($podcast){
+        })->each(function ($podcast) {
             $this->dispatch(new UpdatePodcast($podcast));
             $this->bar->advance();
         });
 
         $this->bar->finish();
+        $this->line('');
     }
 }
