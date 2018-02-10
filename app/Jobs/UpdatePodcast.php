@@ -55,10 +55,13 @@ class UpdatePodcast implements ShouldQueue
 
         $title = $this->formatInput($feed->channel->title);
         $avatar = $this->formatInput($itunes->image->attributes()['href'] ?? $feed->channel->image->url);
-        $avatar = explode('?', $avatar)[0]; // Remove query params;
+        $url = parse_url($avatar);
 
         $filename = Str::slug($title);
-        $extension = pathinfo($avatar, PATHINFO_EXTENSION);
+        $extension = pathinfo($url['path'], PATHINFO_EXTENSION);
+        if (strlen($extension) == 0) {
+            $extension = pathinfo($url['query'], PATHINFO_EXTENSION);
+        }
 
         $this->podcast->update([
             'title' => $title,
