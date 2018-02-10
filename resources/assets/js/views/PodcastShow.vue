@@ -25,8 +25,8 @@
                         <span v-else class="font-bold">All episodes</span>
                     </div>
                     <div v-for="episode in visibleEpisodes" :key="episode.id" class="flex border-t items-center py-2 px-4 hover:bg-grey-lighter">
-                        <div class="text-grey-dark mr-2" v-if="episode.number">{{ episode.number }}</div>
-                        <div class="flex-1 px-4 md:flex items-center">
+                        <div class="text-grey-dark mr-4" v-if="episode.number">{{ episode.number }}</div>
+                        <div class="flex-1 md:flex items-center">
                             <div class="flex-1 mb-1 mr-2">
                                 <router-link class="no-underline text-black block" :to="{name:'episodes.show', params:{podcastId: podcast.id, episodeId: episode.id}}">{{ episode.title }}</router-link>
                             </div>
@@ -35,9 +35,9 @@
                                 <div class="pr-4 text-grey-dark text-right w-28">{{ episode.published_at }}</div>
                             </div>
                         </div>
-                            <div class="">
-                                <button class="btn" @click="playEpisode(episode)">Listen</button>
-                            </div>
+                        <div class="ml-4">
+                            <button class="btn" @click="playEpisode(episode)">Listen</button>
+                        </div>
                     </div>
                 </div>
             </div>
