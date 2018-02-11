@@ -30,7 +30,7 @@ class PodcastController
             'url' => 'required',
         ]);
 
-        $podcast = Podcast::firstOrCreate([
+        $podcast = Podcast::firstOrNew([
             'url' => request('url'),
         ]);
 

@@ -35,7 +35,13 @@ class UpdatePodcast implements ShouldQueue
      */
     public function handle()
     {
-        $feed = simplexml_load_string(Zttp::contentType('text/xml')->get($this->podcast->url)->body());
+        $res = Zttp::contentType('text/xml')->get($this->podcast->url);
+
+        if (!$res->isSuccess()) {
+            throw new \Exception("Failed to load feed: {$this->podcast->url}", $res->status());
+        }
+
+        $feed = simplexml_load_string($res->body());
         
         $this->updatePodcast($feed);
 
@@ -63,7 +69,7 @@ class UpdatePodcast implements ShouldQueue
             $extension = pathinfo($url['query'], PATHINFO_EXTENSION);
         }
 
-        $this->podcast->update([
+        $this->podcast->fill([
             'title' => $title,
             'logo'  => "{$filename}.{$extension}",
             'meta'  => [
@@ -71,7 +77,7 @@ class UpdatePodcast implements ShouldQueue
                 'avatar'      => $avatar,
                 'domain'      => $this->formatInput($feed->channel->link),
             ],
-        ]);
+        ])->save();
 
         $file = storage_path("app/public/logos/{$filename}.{$extension}");
 
