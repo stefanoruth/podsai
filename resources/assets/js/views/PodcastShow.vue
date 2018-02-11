@@ -28,7 +28,7 @@
                         <div class="text-grey-dark mr-4" v-if="episode.number">{{ episode.number }}</div>
                         <div class="flex-1 md:flex items-center">
                             <div class="flex-1 mb-1 mr-2 md:mb-0">
-                                <router-link class="no-underline text-black block" :to="{name:'episodes.show', params:{podcastId: podcast.id, episodeId: episode.id}}">{{ episode.title }}</router-link>
+                                <router-link class="block" :class="{'line-through text-grey-darker': episode.completion != null && episode.completion.completed, 'no-underline text-black': episode.completion == null || episode.completion.completed == false}" :to="{name:'episodes.show', params:{podcastId: podcast.id, episodeId: episode.id}}">{{ episode.title }}</router-link>
                             </div>
                             <div class="flex">
                                 <div class="mr-2 text-grey-dark text-right">{{ episode.length }}</div>
