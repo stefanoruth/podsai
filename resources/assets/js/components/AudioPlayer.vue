@@ -11,7 +11,7 @@
                     </div>
                     <div class="select-none text-xs">{{ humanLength }}</div>
                 </div>
-                <div class="text-center">
+                <div class="text-center select-none">
                     <span class="mr-1">{{ episode.title }}</span>
                     <span class="text-xs uppercase text-grey-darker">- {{ episode.podcast.title }}</span>
                 </div>
