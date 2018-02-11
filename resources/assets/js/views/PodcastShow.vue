@@ -27,12 +27,12 @@
                     <div v-for="episode in visibleEpisodes" :key="episode.id" class="flex border-t items-center py-2 px-4 hover:bg-grey-lighter">
                         <div class="text-grey-dark mr-4" v-if="episode.number">{{ episode.number }}</div>
                         <div class="flex-1 md:flex items-center">
-                            <div class="flex-1 mb-1 mr-2">
+                            <div class="flex-1 mb-1 mr-2 md:mb-0">
                                 <router-link class="no-underline text-black block" :to="{name:'episodes.show', params:{podcastId: podcast.id, episodeId: episode.id}}">{{ episode.title }}</router-link>
                             </div>
                             <div class="flex">
-                                <div class="pr-2 text-grey-dark text-right">{{ episode.length }}</div>
-                                <div class="pr-4 text-grey-dark text-right w-28">{{ episode.published_at }}</div>
+                                <div class="mr-2 text-grey-dark text-right">{{ episode.length }}</div>
+                                <div class="text-grey-dark text-right w-24">{{ episode.published_at }}</div>
                             </div>
                         </div>
                         <div class="ml-4">
