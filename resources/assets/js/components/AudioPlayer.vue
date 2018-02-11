@@ -123,7 +123,8 @@
             },
 
             setTime(event) {
-                this.player.currentTime = this.length / _.find(event.path, (item) => {return item.id == 'progress-bar';}).offsetWidth * event.offsetX;
+                let bar = (event.target.id == 'progress-bar') ? event.target : (event.target.parentNode.id == 'progress-bar' ? event.target.parentNode : null);
+                this.player.currentTime = this.length / bar.offsetWidth * event.offsetX;
             },
 
             setVolume() {
