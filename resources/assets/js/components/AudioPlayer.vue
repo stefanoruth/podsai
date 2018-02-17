@@ -30,10 +30,10 @@
                     </div>
                 </div>
             </div>
-            <div class="border-l flex items-center">
-                <button @click="togglePlay()" id="playButton" class="h-12 w-12">
-                    <svg v-show="isPlaying" class="h-full w-full fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/></svg>
-                    <svg v-show="!isPlaying" class="h-full w-full fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
+            <div class="border-l flex items-stretch">
+                <button @click="togglePlay()" id="playButton" class="">
+                    <svg v-show="isPlaying" class="h-12 w-12 fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/></svg>
+                    <svg v-show="!isPlaying" class="h-12 w-12 fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
                 </button>
             </div>
         </div>
