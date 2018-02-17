@@ -15,7 +15,7 @@
                         <button class="btn-primary" @click="playEpisode(episode)">Listen</button>
                     </div>
                 </div>
-                <div class="content bg-white p-4 shadow" v-html="episode.show_notes"></div>
+                <div class="content bg-white p-4 shadow" v-if="episode.show_notes" v-html="episode.show_notes"></div>
             </div>
         </div>
     </div>
