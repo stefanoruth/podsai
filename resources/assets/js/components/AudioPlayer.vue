@@ -12,8 +12,10 @@
                     <div class="select-none text-xs">{{ humanLength }}</div>
                 </div>
                 <div class="text-center select-none">
-                    <span class="mr-1">{{ episode.title }}</span>
-                    <span class="text-xs uppercase text-grey-darker">- {{ episode.podcast.title }}</span>
+                    <span class="mr-1">
+                        <router-link class="no-underline text-black" :to="{name:'episodes.show', params:{episodeId: episode.id, podcastId: episode.podcast.id}}">{{ episode.title }}</router-link>
+                    </span>
+                    <span class="text-xs uppercase text-grey-darker">- <router-link class="text-grey-darker no-underline" :to="{name:'podcasts.show', params:{id:episode.podcast.id}}">{{ episode.podcast.title }}</router-link></span>
                 </div>
             </div>
             <div class="border-l hidden md:flex items-center group relative">
