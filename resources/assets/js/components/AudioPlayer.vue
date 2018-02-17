@@ -131,6 +131,10 @@
                 this.player.volume = this.volume / 100;
             },
 
+            setDomTitle() {
+                document.title = this.episode.title+" | Podsai";
+            },
+
             init() {
                 this.player.addEventListener('play', () => {
                     this.isPlaying = true;
@@ -166,8 +170,7 @@
                     this.autoPlay = true;
                     this.audio = episode.audio;
                     this.loadDuration();
-
-                    document.title = this.episode.title+" | Podsai";
+                    this.setDomTitle();
                 });
             },
 
@@ -177,6 +180,7 @@
                         this.episode = res.data.data.episode;
                         this.audio = res.data.data.episode.audio;
                         this.player.currentTime = res.data.data.duration;
+                        this.setDomTitle();
                     }
                 });
             },
