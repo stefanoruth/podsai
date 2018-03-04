@@ -40,4 +40,9 @@ return [
         'client_secret' => env('GOOGLE_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT'),
     ],
+
+    'rollbar' => [
+        'access_token' => env('ROLLBAR_TOKEN'),
+        'level' => env('ROLLBAR_LEVEL'),
+    ],
 ];
