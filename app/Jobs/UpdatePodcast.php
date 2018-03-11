@@ -38,7 +38,7 @@ class UpdatePodcast implements ShouldQueue
         $res = Zttp::contentType('text/xml')->get($this->podcast->url);
 
         if (!$res->isSuccess()) {
-            throw new \Exception("Failed to load feed: {$this->podcast->url}", $res->status());
+            throw new \Exception("Failed to load feed: {$this->podcast->title} - {$this->podcast->url}", $res->status());
         }
 
         $feed = simplexml_load_string($res->body());
