@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Zttp\Zttp;
+use App\Exceptions\PodcastLoadingException;
 
 class UpdatePodcast implements ShouldQueue
 {
@@ -38,7 +39,14 @@ class UpdatePodcast implements ShouldQueue
         $res = Zttp::contentType('text/xml')->get($this->podcast->url);
 
         if (!$res->isSuccess()) {
-            throw new \Exception("Failed to load feed: {$this->podcast->title} - {$this->podcast->url}", $res->status());
+            throw new PodcastLoadingException(
+                sprintf(
+                    "%s - %s",
+                    $this->podcast->title,
+                    $this->podcast->url
+                ),
+                $res->status()
+            );
         }
 
         $feed = simplexml_load_string($res->body());
