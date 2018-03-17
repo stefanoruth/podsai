@@ -16,6 +16,11 @@
 </head>
 <body class="font-sans bg-grey-lightest text-black">
     @yield('body')
+    <noscript>
+        For full functionality of this site it is necessary to enable JavaScript.
+        Here are the <a href="https://www.enable-javascript.com/" target="_blank">
+        instructions how to enable JavaScript in your web browser</a>.
+    </noscript>
     @routes
     <script async src="{{ mix('app.js') }}"></script>
 </body>
