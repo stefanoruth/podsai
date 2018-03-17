@@ -171,6 +171,7 @@
                     this.episode = episode;
                     this.autoPlay = true;
                     this.length = 0;
+                    this.player.currentTime = 0;
                     this.audio = episode.audio;
                     this.loadDuration();
                     this.setDomTitle();
