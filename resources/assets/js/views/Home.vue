@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="bg-orange px-8 py-8 md:py-12 border-b border-t">
-            <div class="max-w-2xl mx-auto">
-                <div class="text-3xl text-white font-bold">Podcasting for everyone</div>
-                <div class="text-xl text-white">A great place to discover and listen to podcasts.</div>
+            <div class="max-w-2xl mx-auto text-white">
+                <div class="text-3xl font-bold">Podcasting for everyone</div>
+                <div class="text-xl">A great place to discover and listen to podcasts.</div>
             </div>
         </div>
 
