@@ -11,7 +11,7 @@
                         <podcast-image :podcast="podcast"></podcast-image>
                     </router-link>
                     <router-link :to="{name:'podcasts.show', params:{id:podcast.id}}" class="block mb-1 no-underline font-bold truncate text-sm text-black">{{ podcast.title }}</router-link>
-                    <a :href="podcast.domain_url" target="_blank" class="block no-underline uppercase truncate text-xs text-grey-darker">{{ podcast.domain }}</a>
+                    <a :href="podcast.domain_url" target="_blank" rel="noopener" class="block no-underline uppercase truncate text-xs text-grey-darker">{{ podcast.domain }}</a>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
                 <div class="mb-8 text-center md:text-left bg-white p-4 shadow">
                     <div class="text-3xl text-black font-bold">{{ podcast.title }}</div>
                     <div class="mb-3">
-                        <a class="no-underline uppercase text-grey-darker text-sm" :href="podcast.domain_url" target="_blank">{{ podcast.domain }}</a>
+                        <a class="no-underline uppercase text-grey-darker text-sm" :href="podcast.domain_url" rel="noopener" target="_blank">{{ podcast.domain }}</a>
                     </div>
                     <div class="mb-4">
                         <button class="py-1 px-3 border rounded" :class="{'bg-orange text-white border-orange': podcast.subscribed, 'hover:bg-orange hover:text-white hover:border-orange': !podcast.subscribed}" @click="subscribe">{{ podcast.subscribed ? 'Subscribed' : 'Subscribe' }}</button>
