@@ -24,7 +24,7 @@ Vue.component('podcast-image', require('./components/PodcastImage'));
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-if(document.getElementById('app')){
+if(document.getElementById('app')) {
     const app = new Vue({
         el: '#app',
         router: new VueRouter({

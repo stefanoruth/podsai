@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-white shadow border-t">
-        <div class="flex" v-if="episode">
+    <div class="bg-white shadow border-t" v-if="episode">
+        <div class="flex">
             <div class="flex-1 px-2 py-1">
                 <div class="flex items-center mb-1">
                     <div class="select-none text-xs">{{ humanTime }}</div>
@@ -32,13 +32,11 @@
             </div>
             <div class="border-l flex items-stretch">
                 <button @click="togglePlay()" id="playButton" class="">
-                    <svg v-show="isPlaying" class="h-12 w-12 fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/></svg>
-                    <svg v-show="!isPlaying" class="h-12 w-12 fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
+                    <svg v-show="!player.paused" class="h-12 w-12 fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/></svg>
+                    <svg v-show="player.paused" class="h-12 w-12 fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
                 </button>
             </div>
         </div>
-        
-        <audio id="audio-player" :src="audio" class="hidden"></audio>
     </div>
 </template>
 
@@ -63,8 +61,6 @@
             return {
                 player: null,
                 episode: null,
-                audio: null,
-                isPlaying: false,
                 duration: 0,
                 length: 0,
                 autoPlay: false,
@@ -73,10 +69,9 @@
         },
 
         mounted() {
-            this.player = document.getElementById('audio-player');
+            this.player = new Audio;
             this.init();
             this.loadLastEpisode();
-
             
             document.addEventListener('keydown', e => {
                 if (e.target.localName == 'input' || e.target.localName == 'button') {
@@ -98,10 +93,10 @@
                     return;
                 }
 
-                if (this.isPlaying) {
-                    this.player.pause();
-                } else {
+                if (this.player.paused) {
                     this.player.play();
+                } else {
+                    this.player.pause();
                 }
             },
 
@@ -113,10 +108,12 @@
                 });
             },
 
-            updateTime() {
-                if (this.episode != null) {
-                    axios.put(route('completions.update', this.episode.id), {time: this.duration});  
-                }
+            saveDuration() {
+                axios.put(route('completions.update', this.episode.id), {time: this.duration});  
+            },
+
+            finishEpisode() {
+                axios.put(route('completions.update', this.episode.id), {complete: true});
             },
 
             formatTime(seconds) {
@@ -133,58 +130,60 @@
                 this.player.volume = this.volume / 100;
             },
 
-            setDomTitle() {
-                document.title = this.episode.title+" | Podsai";
+            setEpisode(episode) {
+                this.episode = episode
+                this.player.src = episode.audio;
+                this.player.load();
+                document.title = episode.title + ' | Podsai';
             },
 
             init() {
-                this.player.addEventListener('play', () => {
-                    this.isPlaying = true;
-                });
                 this.player.addEventListener('pause', () => {
-                    this.isPlaying = false;
-                    this.updateTime();
+                    this.saveDuration();
                 });
+
                 this.player.addEventListener('timeupdate', () => {
                     this.duration = this.player.currentTime;
                 });
+
                 this.player.addEventListener('loadeddata', () => {
                     this.length = parseInt(this.player.duration);
+                });
+
+                this.player.addEventListener('canplay', () => {
                     if (this.autoPlay) {
                         this.player.play();
                         this.autoPlay = false;
                     }
                 });
+
                 this.player.addEventListener('ended', () => {
-                    this.isPlaying = false;
-                    axios.put(route('completions.update', this.episode.id), {complete: true});
+                    this.finishEpisode();
                 });
+
                 window.addEventListener('beforeunload', () => {
-                    this.updateTime();
+                    this.saveDuration();
                 });
+
                 EventBus.$on('playEpisode', (episode) => {
                     if (this.episode && this.episode.id == episode.id) {
                         this.player.play();
                         return;
                     }
 
-                    this.episode = episode;
                     this.autoPlay = true;
                     this.length = 0;
                     this.player.currentTime = 0;
-                    this.audio = episode.audio;
+                    this.setEpisode(episode);
                     this.loadDuration();
-                    this.setDomTitle();
                 });
             },
 
             loadLastEpisode() {
                 axios.get(route('completions.index')).then(res => {
                     if (res.data != '') {
-                        this.episode = res.data.data.episode;
-                        this.audio = res.data.data.episode.audio;
+                        this.setEpisode(res.data.data.episode);
                         this.player.currentTime = res.data.data.duration;
-                        this.setDomTitle();
                     }
                 });
             },
