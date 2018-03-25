@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Zttp\Zttp;
 use App\Exceptions\PodcastLoadingException;
+use Carbon\Carbon;
 
 class UpdatePodcast implements ShouldQueue
 {
@@ -115,13 +116,21 @@ class UpdatePodcast implements ShouldQueue
             'published_at' => strtotime($item->pubDate),
             'meta'         => [
                 'length'      => value(function () use ($itunes) {
-                    $duration = $this->formatInput($itunes->duration);
+                    $time = $this->formatInput($itunes->duration);
 
-                    if (strpos($duration, ':') === false) {
-                        return gmdate('H:i:s', $duration);
+                    if (substr_count($time, ':') == 2) {
+                        $val = explode(':', $time);
+                        
+                        $duration = ($val[0]*60*60) + ($val[1]*60) + $val[2];
+                    } elseif (substr_count($time, ':') == 1) {
+                        $val = explode(':', $time);
+
+                        $duration = ($val[0] * 60) + $val[1];
+                    } else {
+                        $duration = $time;
                     }
 
-                    return $duration;
+                    return Carbon::createFromFormat('H:i:s', gmdate('H:i:s', $duration))->diffInMinutes(Carbon::parse(date('Y-m-d 00:00:00'))) . ' min';
                 }),
                 'season'      => $this->formatInput($itunes->season),
                 'number'      => $this->formatInput($itunes->episode),

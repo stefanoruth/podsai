@@ -87,14 +87,6 @@ class Episode extends Model
 
     public function getDurationAttribute()
     {
-        $time = data_get($this->meta, 'length');
-
-        if (substr_count($time, ':') == 1) {
-            $format = 'H:i';
-        } else {
-            $format = 'H:i:s';
-        }
-
-        return Carbon::createFromFormat($format, $time)->diffInMinutes(Carbon::parse(date('Y-m-d 00:00:00'))) . ' min';
+        return data_get($this->meta, 'length');
     }
 }
