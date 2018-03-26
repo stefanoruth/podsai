@@ -120,7 +120,7 @@
             },
 
             saveDuration() {
-                if (!this.player.ended) {
+                if (this.episode != null && !this.player.ended) {
                     axios.put(route('completions.update', this.episode.id), {time: this.duration});
                 }
             },
