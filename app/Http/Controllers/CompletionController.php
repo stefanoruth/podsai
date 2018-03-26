@@ -85,7 +85,9 @@ class CompletionController
             $update = ['time' => request('time')];
         }
 
-        Auth::user()->episodes()->updateOrCreate(['episode_id' => $id], $update);
+        return EpisodeCompletionResource::make(
+            Auth::user()->episodes()->updateOrCreate(['episode_id' => $id], $update)
+        );
     }
 
     /**
@@ -96,6 +98,6 @@ class CompletionController
      */
     public function destroy($id)
     {
-        Auth::user()->episodes()->where('id', $id)->delete();
+        return Auth::user()->episodes()->where('episode_id', $id)->delete();
     }
 }

@@ -2,7 +2,9 @@
     <div v-if="episode != null" class="mx-auto max-w-2xl px-4 py-8">
         <div class="md:flex">
             <div class="flex justify-center md:block md:pr-8 md:w-1/4 mb-4">
-                <episode-image :episode="episode"></episode-image>
+                <div @click="completeEpisode">
+                    <episode-image :episode="episode"></episode-image>
+                </div>
             </div>
             <div class="flex-1">
                 <div class="bg-white shadow mb-4 p-4">
@@ -41,6 +43,18 @@
 
         methods: {
             playEpisode: EventBus.playEpisode,
+
+            completeEpisode() {
+                if (this.episode.completion == null || this.episode.completion.completed == false) {
+                    axios.put(route('completions.update', this.episode.id), {complete: true}).then((response) => {
+                        this.episode.completion =  response.data.data;
+                    });
+                } else if (this.episode.completion.completed) {
+                    axios.delete(route('completions.destroy', this.episode.id)).then(() => {
+                        this.episode.completion.completed = false;
+                    });
+                }
+            },
         },
     }
 </script>
