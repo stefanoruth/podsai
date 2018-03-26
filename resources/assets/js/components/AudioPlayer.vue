@@ -5,8 +5,9 @@
                 <div class="flex items-center mb-1">
                     <div class="select-none text-xs">{{ humanTime }}</div>
                     <div class="flex-1 px-2">
-                        <div class="h-2 w-full rounded cursor-pointer border" id="progress-bar" @click="setTime">
-                            <span class="bg-orange block h-full" :style="{width: barDuration}"></span>
+                        <div class="h-2 w-full rounded cursor-pointer border relative overflow-hidden" id="progress-bar" @click="setTime">
+                            <span class="bg-grey-lighter block h-full pin-t pin-l rounded absolute" :style="{width: barBuffered}"></span>
+                            <span class="bg-orange block h-full pin-t pin-l rounded absolute" :style="{width: barDuration}"></span>
                         </div>
                     </div>
                     <div class="select-none text-xs">{{ humanLength }}</div>
@@ -53,8 +54,11 @@
                 return this.formatTime(this.length);
             },
             barDuration: function() {
-                return (this.duration / this.length) * 100+'%';
-            }
+                return (this.duration / this.length) * 100 + '%';
+            },
+            barBuffered: function() {
+                return (this.buffered / this.length) * 100 + '%';
+            },
         },
 
         data() {
@@ -65,6 +69,7 @@
                 length: 0,
                 autoPlay: false,
                 volume: 100,
+                buffered: 0,
             };
         },
 
@@ -106,6 +111,12 @@
                         this.player.currentTime = response.data.data.duration - 3;  // Remove 3 sec for user to remeber where they left off.
                     }
                 });
+            },
+
+            getBufferState() {
+                if (this.player.buffered.length > 0) {
+                    this.buffered = this.player.buffered.end(this.player.buffered.length - 1);
+                }
             },
 
             saveDuration() {
@@ -160,6 +171,9 @@
                 this.player.addEventListener('ended', () => {
                     this.finishEpisode();
                 });
+
+                // onprogress event doesn't seem to be fully supported
+                setInterval(this.getBufferState, 1000);
 
                 window.addEventListener('beforeunload', () => {
                     this.saveDuration();
