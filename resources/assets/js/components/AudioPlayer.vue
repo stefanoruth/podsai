@@ -120,7 +120,9 @@
             },
 
             saveDuration() {
-                axios.put(route('completions.update', this.episode.id), {time: this.duration});  
+                if (!this.player.ended) {
+                    axios.put(route('completions.update', this.episode.id), {time: this.duration});
+                }
             },
 
             finishEpisode() {
