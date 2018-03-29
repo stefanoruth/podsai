@@ -112,7 +112,7 @@ class UpdatePodcast implements ShouldQueue
             'key' => $this->formatInput($item->guid),
         ], [
             'title'        => $this->formatInput($item->title),
-            'audio'        => $this->formatInput($item->enclosure->attributes()['url']),
+            'audio'        => $this->formatInput(str_replace('http://', 'https://', $item->enclosure->attributes()['url'])),
             'published_at' => strtotime($item->pubDate),
             'meta'         => [
                 'length'      => value(function () use ($itunes) {
