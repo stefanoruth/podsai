@@ -136,7 +136,7 @@ class UpdatePodcast implements ShouldQueue
                 'number'      => $this->formatInput($itunes->episode),
                 'link'        => $this->formatInput($item->link),
                 'description' => strip_tags($this->formatInput($item->description)),
-                'show_notes'  => preg_replace("/(<a)/", '<a target="_blank" rel="noreferrer"', $this->formatInput($item->children('http://purl.org/rss/1.0/modules/content/')->encoded)),
+                'show_notes'  => preg_replace("/(<a)/", '<a target="_blank" rel="noopener"', $this->formatInput($item->children('http://purl.org/rss/1.0/modules/content/')->encoded)),
             ],
         ]);
     }
