@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#f6993f">
-    <link async rel="stylesheet" href="{{ mix('app.css') }}">
+    <link rel="stylesheet" href="{{ mix('app.css') }}">
 </head>
 <body class="font-sans bg-grey-lightest text-black">
     @yield('body')
