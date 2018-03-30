@@ -3,7 +3,7 @@
         <nav class="max-w-2xl mx-auto relative select-none md:flex md:items-stretch">
             <div class="flex flex-no-shrink items-stretch">
                 <router-link to="/" @click.native="mobileMenu = false" class="flex-no-grow flex-no-shrink relative p-4 md:p-8 leading-normal text-black text-2xl font-black text-grey-darkest no-underline flex items-center">Podsai</router-link>
-                <button class="block md:hidden cursor-pointer ml-auto relative p-4" @click="mobileMenu = !mobileMenu">
+                <button class="block md:hidden cursor-pointer ml-auto relative p-4" @click="mobileMenu = !mobileMenu" aria-label="Open Menu">
                     <div class="h-6 w-6">
                         <svg v-show="!mobileMenu" class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
                         <svg v-show="mobileMenu" class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>

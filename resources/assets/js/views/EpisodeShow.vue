@@ -2,7 +2,7 @@
     <div v-if="episode != null" class="mx-auto max-w-2xl px-4 py-8">
         <div class="md:flex">
             <div class="flex justify-center md:block md:pr-8 md:w-1/4 mb-4">
-                <div @click="completeEpisode">
+                <div @click="completeEpisode" class="cursor-pointer">
                     <episode-image :episode="episode"></episode-image>
                 </div>
             </div>

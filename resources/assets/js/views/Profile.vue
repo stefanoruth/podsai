@@ -1,7 +1,7 @@
     <template>
     <div v-if="user != null" class="px-4 py-8 max-w-2xl mx-auto md:flex">
         <div class="flex justify-center md:block md:pr-8 md:w-1/4 mb-4">
-            <img class="h-32 w-32 md:h-auto md:w-full shadow-md" :src="user.avatar">
+            <img class="h-32 w-32 md:h-auto md:w-full shadow-md" :src="user.avatar" :alt="user.name">
         </div>
         <div class="flex-1">
             <div class="bg-white p-4 shadow mb-4">
