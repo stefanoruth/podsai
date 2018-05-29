@@ -1,11 +1,17 @@
 @extends('master')
 
 @section('body')
-    <div class="h-screen border-t-8 border-orange p-6 flex justify-center items-center">
-        <div class="flex justify-center items-center flex-col max-w-sm">
-            <h1 class="text-center mb-4 font-semibold text-4xl">Podsai</h1>
-            <h2 class="font-light text-center mb-8 text-5xl">Your favorite podcasts everywhere</h2>
-            <a href="{{ url('login') }}" class="btn-primary px-6 py-4">Continue with Google</a>
+    <div class="h-screen bg-orange flex justify-center items-center">
+        <div class="max-w-md w-full text-white py-6 px-4">
+            <div class="flex justify-between items-center mb-screen-1/5">
+                <a class="font-bold text-5xl no-underline">Podsai</a>
+                <a href="{{ url('login') }}" class="bg-orange-dark no-underline text-white rounded-sm text-lg px-4 py-2">Log In</a>
+            </div>
+            <h1 class="font-semibold text-3xl mb-6">Your favorite podcasts everywhere.</h1>
+            <div class="text-xl">
+                <p class="mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <p>Illo quam amet quos debitis temporibus quo aperiam! Mollitia beatae pariatur, alias laboriosam aperiam natus velit odit nostrum voluptatibus rerum et esse?</p>
+            </div>
         </div>
     </div>
 @stop
