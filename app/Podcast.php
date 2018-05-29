@@ -2,11 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Podcast extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -50,7 +53,7 @@ class Podcast extends Model
         return $this->hasOne(Subscription::class)->where('user_id', Auth::id());
     }
 
-    /** 
+    /**
      * Logo url path
      * @return string
      */
