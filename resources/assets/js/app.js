@@ -9,6 +9,7 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 window.Vue = Vue;
+window.mixVersion = '';
 
 Vue.use(VueRouter);
 Vue.config.productionTip = false
@@ -37,6 +38,17 @@ if(document.getElementById('app')) {
                 { path: '/profile', name: 'profile', component: require('./views/Profile') },
             ],
         }),
+
+        mounted() {
+
+            axios.get('mix-manifest.json').then(res => {
+                var version = res.data['/app.css'].split('?');
+
+                if (version.length == 2) {
+                    window.mixVersion = '?'+version.pop();
+                }
+            });
+        }
     });
 }
 

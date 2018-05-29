@@ -69,6 +69,7 @@ class UpdatePodcast implements ShouldQueue
         $itunes = $feed->channel->children('http://www.itunes.com/dtds/podcast-1.0.dtd');
 
         $title = $this->formatInput($feed->channel->title);
+        $oldAvatar = $this->podcast->meta->avatar;
         $avatar = $this->formatInput($itunes->image->attributes()['href'] ?? $feed->channel->image->url);
         $url = parse_url($avatar);
 
@@ -82,15 +83,15 @@ class UpdatePodcast implements ShouldQueue
             'title' => $title,
             'logo'  => "{$filename}.{$extension}",
             'meta'  => [
-                'description' => $this->formatInput($feed->channel->description),
-                'avatar'      => $avatar,
-                'domain'      => $this->formatInput($feed->channel->link),
+                'description'    => $this->formatInput($feed->channel->description),
+                'avatar'         => $avatar,
+                'domain'         => $this->formatInput($feed->channel->link),
             ],
         ])->save();
 
         $file = storage_path("app/public/logos/{$filename}.{$extension}");
 
-        if (!file_exists($file)) {
+        if (!file_exists($file) || $oldAvatar !== $avatar) {
             Image::make($avatar)->fit(256, 256)->save($file);
         }
     }
