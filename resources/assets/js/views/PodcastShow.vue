@@ -16,9 +16,9 @@
                     <div class="">{{ podcast.description }}</div>
                 </div>
 
-                <div class="bg-white shadow">
+                <div class="bg-white shadow" v-if="podcast.episodes.length > 0">
                     <div class="p-4 flex justify-between">
-                        <template v-if="recentOnly">
+                        <template v-if="recentOnly && podcast.episodes.length > 5">
                             <span class="font-bold mr-2">Recent Episodes</span>
                             <button class="no-underline text-orange hover:text-orange-dark hover:underline" v-if="recentOnly" @click="recentOnly = false">View all</button>
                         </template>
@@ -60,7 +60,7 @@
 
         computed: {
             visibleEpisodes: function() {
-                if (this.recentOnly) {
+                if (this.podcast.episodes.length > 5 && this.recentOnly) {
                     return this.podcast.episodes.slice(0,5);
                 }
 
