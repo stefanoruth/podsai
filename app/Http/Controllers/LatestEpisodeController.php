@@ -15,6 +15,6 @@ class LatestEpisodeController
      */
     public function index()
     {
-        return EpisodeResource::collection(\Auth::user()->latestsEpisodes()->take(10)->get());
+        return EpisodeResource::collection(\Auth::user()->latestsEpisodes()->take(20)->get());
     }
 }

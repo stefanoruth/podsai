@@ -8,10 +8,9 @@
             <div class="flex flex-wrap -mx-4">
                 <div v-for="podcast in podcasts" :key="podcast.id" class="p-4 w-1/2 sm:w-1/4 md:w-1/6">
                     <router-link :to="{name:'podcasts.show', params:{id:podcast.id}}" class="mb-2 block">
-                        <podcast-image :podcast="podcast"></podcast-image>
+                        <podcast-image class="rounded-lg" :podcast="podcast"></podcast-image>
                     </router-link>
                     <router-link :to="{name:'podcasts.show', params:{id:podcast.id}}" class="block mb-1 no-underline font-bold truncate text-sm text-black">{{ podcast.title }}</router-link>
-                    <a :href="podcast.domain_url" target="_blank" rel="noopener" class="block no-underline uppercase truncate text-xs text-grey-darker">{{ podcast.domain }}</a>
                 </div>
             </div>
         </div>

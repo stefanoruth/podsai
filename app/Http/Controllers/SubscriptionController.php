@@ -16,7 +16,7 @@ class SubscriptionController
     public function index()
     {
         return PodcastResource::collection(
-            Auth::user()->podcasts()->get()
+            Auth::user()->podcasts()->withCount('episodes')->with('subscription')->orderBy('title', 'ASC')->get()
         );
     }
 

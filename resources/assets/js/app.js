@@ -18,6 +18,24 @@ Vue.component('navbar', require('./components/Navbar'));
 Vue.component('modal', require('./components/Modal'));
 Vue.component('episode-image', require('./components/EpisodeImage'));
 Vue.component('podcast-image', require('./components/PodcastImage'));
+Vue.component('podcast-list-item', require('./components/PodcastListItem'));
+Vue.component('episode-info', require('./components/EpisodeInfo'));
+
+Vue.mixin({
+    methods: {
+        subscribe(podcast) {
+            if (podcast.subscribed) {
+                axios.delete(route('subscriptions.destroy', podcast.id)).then((response) => {
+                    podcast.subscribed = false;
+                });
+            } else {
+                axios.post(route('subscriptions.store'), {podcast_id:podcast.id}).then((response) => {
+                    podcast.subscribed = true;
+                });
+            }
+        },
+    },
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,14 +47,7 @@ if(document.getElementById('app')) {
     const app = new Vue({
         el: '#app',
         router: new VueRouter({
-            routes: [
-                { path: '/', component: require('./views/Home') },
-                { path: '/episodes/latest', name: 'episodes.latest', component: require('./views/LatestEpisodes') },
-                { path: '/podcasts', name: 'podcasts.index', component: require('./views/Podcasts') },
-                { path: '/podcasts/:id', name: 'podcasts.show', component: require('./views/PodcastShow'), props: true },
-                { path: '/podcasts/:podcastId/episodes/:episodeId', name: 'episodes.show', component: require('./views/EpisodeShow'), props: true },
-                { path: '/profile', name: 'profile', component: require('./views/Profile') },
-            ],
+            routes: require('./routes.js'),
         }),
 
         mounted() {

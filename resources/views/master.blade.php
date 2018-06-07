@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#f6993f">
     <link rel="stylesheet" href="{{ mix('app.css') }}">
 </head>
-<body class="font-sans bg-grey-lightest text-black">
+<body class="font-sans bg-grey-lighter text-black">
     @yield('body')
     <noscript>
         For full functionality of this site it is necessary to enable JavaScript.

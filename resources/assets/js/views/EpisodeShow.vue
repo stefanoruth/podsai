@@ -1,24 +1,22 @@
 <template>
-    <div v-if="episode != null" class="mx-auto max-w-2xl px-4 py-8">
-        <div class="md:flex">
-            <div class="flex justify-center md:block md:pr-8 md:w-1/4 mb-4">
-                <div @click="completeEpisode" class="cursor-pointer">
-                    <episode-image :episode="episode"></episode-image>
+    <div v-if="episode != null" class="mx-auto max-w-md flex items-center py-4 px-2">
+        <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex">
+                <div>
+                    <router-link :to="'/podcasts/'+episode.podcast.id" class="block">
+                        <img class="w-16 h-16 block shadow-md rounded-lg" :src="episode.podcast.logo" :alt="episode.podcast.title">
+                    </router-link>
+                </div>
+                <div class="flex-1 flex flex-col justify-center px-2">
+                    <episode-info :episode="episode"></episode-info>
+                </div>
+                <div class="flex items-center">
+                    <button class="w-10 h-10 rounded-full shadow bg-purple p-2" @click="playEpisode(episode)">
+                        <svg class="w-full h-full fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
+                    </button>
                 </div>
             </div>
-            <div class="flex-1">
-                <div class="bg-white shadow mb-4 p-4">
-                    <div class="text-3xl text-black font-bold mb-2">{{ episode.title }}</div>
-                    <div class="flex mb-4">
-                        <div class="pr-2">{{ episode.length }}</div>
-                        <div>{{ episode.published_at }}</div>
-                    </div>
-                    <div class="">
-                        <button class="btn-primary" @click="playEpisode(episode)">Listen</button>
-                    </div>
-                </div>
-                <div class="content bg-white p-4 shadow" v-if="episode.show_notes" v-html="episode.show_notes"></div>
-            </div>
+            <div class="content border-t pt-4 mt-4 border-grey" v-if="episode.show_notes" v-html="episode.show_notes"></div>
         </div>
     </div>
 </template>

@@ -1,60 +1,24 @@
 <template>
-    <div class="bg-white border-t-8 border-orange">
-        <nav class="max-w-2xl mx-auto relative select-none md:flex md:items-stretch">
-            <div class="flex flex-no-shrink items-stretch">
-                <router-link to="/" @click.native="mobileMenu = false" class="flex-no-grow flex-no-shrink relative p-4 md:p-8 leading-normal text-black text-2xl font-black text-grey-darkest no-underline flex items-center">Podsai</router-link>
-                <button class="block md:hidden cursor-pointer ml-auto relative p-4" @click="mobileMenu = !mobileMenu" aria-label="Open Menu">
-                    <div class="h-6 w-6">
-                        <svg v-show="!mobileMenu" class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-                        <svg v-show="mobileMenu" class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>
-                    </div>
-                </button>
+    <div class="bg-white border-t">
+        <div class="flex mx-auto max-w-md">
+            <div class="flex-1">
+                <router-link to="/my-podcasts" class="no-underline text-black text-center text-sm block p-2 hover:bg-grey-light">
+                    <svg class="h-6 w-6 fill-current text-grey-darkest" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9 11.73a2 2 0 1 1 2 0V20H9v-8.27zm5.24 2.51l-1.41-1.41A3.99 3.99 0 0 0 10 6a4 4 0 0 0-2.83 6.83l-1.41 1.41a6 6 0 1 1 8.49 0zm2.83 2.83l-1.41-1.41a8 8 0 1 0-11.31 0l-1.42 1.41a10 10 0 1 1 14.14 0z"/></svg>
+                    <div>My Podcasts</div>
+                </router-link>
             </div>
-            <div class="md:flex md:items-stretch md:flex-no-shrink md:flex-grow border-b md:border-b-0" v-bind:class="{'hidden':!mobileMenu}">
-                <div class="md:flex md:items-stretch md:justify-end ml-auto">
-                    <router-link :to="{name:'podcasts.index'}" @click.native="mobileMenu = false" class="menu-item md:py-8">Podcasts</router-link>
-                    <router-link :to="{name:'episodes.latest'}" @click.native="mobileMenu = false" class="menu-item md:py-8">Episodes</router-link>
-                    <div class="relative items-stretch md:flex group cursor-pointer">
-                        <div class="menu-item hidden md:flex md:py-8">
-                            <span class="pr-1">Account</span>
-                            <svg class="fill-current h-4 w-4 pt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>    
-                        </div>
-                        <div class="md:absolute pin-r pin-t-100 md:hidden min-w-full group-hover:block bg-white md:shadow z-20 md:rounded-b md:py-1">
-                            <router-link :to="{name: 'profile'}" @click.native="mobileMenu = false" class="menu-item px-4">Profile</router-link>
-                            <a :href="logout" @click.native="mobileMenu = false" class="menu-item px-4">Logout</a>
-                        </div>
-                    </div>
-                    
-                </div>
+            <!-- <div class="flex-1">
+                <router-link to="#" class="no-underline text-black text-center text-sm block p-2 hover:bg-grey-light">
+                    <svg class="h-6 w-6 fill-current text-grey-darkest" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M16 17a3 3 0 0 1-3 3h-2a3 3 0 0 1 0-6h2a3 3 0 0 1 1 .17V1l6-1v4l-4 .67V17zM0 3h12v2H0V3zm0 4h12v2H0V7zm0 4h12v2H0v-2zm0 4h6v2H0v-2z"/></svg>
+                    <div>Playlist</div>
+                </router-link>
+            </div> -->
+            <div class="flex-1">
+                <router-link to="#" class="no-underline text-black text-center text-sm block p-2 hover:bg-grey-light">
+                    <svg class="h-6 w-6 fill-current text-grey-darkest" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M16 8A6 6 0 1 0 4 8v11H2a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2V8a8 8 0 1 1 16 0v3a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2V8zm-4 2h3v10h-3V10zm-7 0h3v10H5V10z"/></svg>
+                    <div>Catalog</div>
+                </router-link>
             </div>
-        </nav>
+        </div>
     </div>
 </template>
-
-<script>
-    export default {
-        data() {
-            return {
-                mobileMenu: false,
-            };
-        },
-
-        computed: {
-            user: function() {
-                return window.user;
-            },
-
-            logout: function() {
-                return route('logout');
-            },
-        },
-
-        mounted() {
-            document.querySelector('main').addEventListener('click', e => {
-                if (this.mobileMenu) {
-                    this.mobileMenu = false;
-                }
-            });
-        }
-    }
-</script>

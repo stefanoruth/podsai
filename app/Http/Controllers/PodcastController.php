@@ -49,6 +49,6 @@ class PodcastController
     {
         return PodcastResource::make(Podcast::with(['subscription', 'episodes' => function ($query) {
             $query->with('podcast', 'userCompletion')->sortLatest();
-        }])->findOrFail($id));
+        }])->withCount('episodes')->findOrFail($id));
     }
 }

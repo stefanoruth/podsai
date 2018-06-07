@@ -1,5 +1,31 @@
 <template>
-    <div class="bg-white shadow border-t" v-if="episode">
+    <div class="bg-white shadow border-t" v-if="episode" :class="{'h-full': !mini}">
+        <div v-if="mini" class="flex items-center p-2">
+            <div class="flex-1 flex" @click="mini = false">
+                <div>
+                <img class="w-12 h-12 block shadow-md rounded-lg" :src="episode.podcast.logo" :alt="episode.title">
+            </div>
+            <div class="flex-1 px-2 flex flex-col justify-center">
+                <div class="no-underline text-black">{{ episode.title }}</div>
+                <div class="no-underline text-grey">{{ episode.podcast.title }}</div>
+            </div>
+            </div>
+            <div class="flex items-center">
+                <button class="w-8 h-8 rounded-full shadow bg-purple p-2" @click="togglePlay">
+                    <svg v-if="player.paused" class="w-full h-full fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
+                    <svg v-else               class="w-full h-full fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/></svg>
+                </button>
+            </div>
+        </div>
+        
+        <div v-else>
+            <div>
+                <div>
+                    <img>
+                </div>
+                <div></div>
+            </div>
+
         <div class="flex">
             <div class="flex-1 px-2 py-1">
                 <div class="flex items-center mb-1">
@@ -31,12 +57,17 @@
                     </div>
                 </div>
             </div>
+            
             <div class="border-l flex items-stretch">
-                <button @click="togglePlay()" id="playButton" class="" aria-label="Play/Pause Episode">
+                <button v-if="isLoading">
+                    <svg class="h-12 w-12 fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 3v2a5 5 0 0 0-3.54 8.54l-1.41 1.41A7 7 0 0 1 10 3zm4.95 2.05A7 7 0 0 1 10 17v-2a5 5 0 0 0 3.54-8.54l1.41-1.41zM10 20l-4-4 4-4v8zm0-12V0l4 4-4 4z"/></svg>
+                </button>
+                <button v-else @click="togglePlay()" id="playButton" class="" aria-label="Play/Pause Episode">
                     <svg v-show="!player.paused" class="h-12 w-12 fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/></svg>
                     <svg v-show="player.paused" class="h-12 w-12 fill-current text-orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6z"/></svg>
                 </button>
             </div>
+        </div>
         </div>
     </div>
 </template>
@@ -70,6 +101,9 @@
                 autoPlay: false,
                 volume: 100,
                 buffered: 0,
+                isLoading: false,
+                isPlaying: false,
+                mini: true,
             };
         },
 
@@ -151,8 +185,17 @@
             },
 
             init() {
+                this.player.addEventListener('play', () => {
+                    this.isPlaying = true;
+                });
+
+                this.player.addEventListener('playing', () => {
+                    this.isPlaying = true;
+                });
+
                 this.player.addEventListener('pause', () => {
                     this.saveDuration();
+                    this.isPlaying = false;
                 });
 
                 this.player.addEventListener('timeupdate', () => {
@@ -164,10 +207,16 @@
                 });
 
                 this.player.addEventListener('canplay', () => {
+                    this.isLoading = false;
+
                     if (this.autoPlay) {
                         this.player.play();
                         this.autoPlay = false;
                     }
+                });
+
+                this.player.addEventListener('waiting', () => {
+                    this.isLoading = true;
                 });
 
                 this.player.addEventListener('ended', () => {

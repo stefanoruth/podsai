@@ -36,7 +36,7 @@ class AuthController
             'image' => $socialiteUser->avatar_original,
         ]);
 
-        // Remeber login
+        // Remember login
         Auth::login($user, true);
 
         return redirect('/');
