@@ -92,7 +92,7 @@ class UpdatePodcast implements ShouldQueue
         $file = storage_path("app/public/logos/{$filename}.{$extension}");
 
         if (!file_exists($file) || $oldAvatar !== $avatar) {
-            Image::make($avatar)->fit(256, 256)->save($file);
+            Image::make($avatar)->fit(512, 512)->save($file);
         }
     }
 
