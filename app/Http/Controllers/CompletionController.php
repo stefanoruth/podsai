@@ -17,7 +17,7 @@ class CompletionController
      */
     public function index()
     {
-        $completion = Auth::user()->episodes()->with('episode.podcast')->orderBy('updated_at', 'DESC')->take(1)->get()->where('completed_at', null)->first();
+        $completion = Auth::user()->episodes()->with('episode.podcast')->where('completed_at', null)->orderBy('updated_at', 'DESC')->first();
 
         if (is_null($completion)) {
             return;
