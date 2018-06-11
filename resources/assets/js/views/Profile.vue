@@ -13,9 +13,13 @@
             </div>
         </div>
         
-        <div class="shadow rounded-lg p-2 bg-white">
+        <div class="shadow rounded-lg p-2 bg-white mb-4">
             <div class="p-2">Episodes Completed Per Week</div>
             <canvas ref="episodeChart" class=""></canvas>
+        </div>
+
+        <div class="flex justify-end">
+            <a :href="routeLogout" class="p-2 bg-white hover:bg-purple hover:text-white no-underline rounded-lg shadow">Logout</a>
         </div>
     </div>
 </template>
@@ -29,6 +33,12 @@
                 user: null,
                 chart: null,
             };
+        },
+
+        computed: {
+            routeLogout: function() {
+                return route('logout');
+            },
         },
 
         mounted() {
