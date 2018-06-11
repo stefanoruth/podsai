@@ -171,6 +171,7 @@
 
             finishEpisode() {
                 axios.put(route('completions.update', this.episode.id), {complete: true});
+                this.episode = null;
             },
 
             formatTime(seconds) {
