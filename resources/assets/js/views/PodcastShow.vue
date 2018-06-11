@@ -26,7 +26,7 @@
                 <div v-for="episode in podcast.episodes" :key="episode.id" class="flex border-b p-4">
                     <router-link :to="'/podcasts/'+podcast.id+'/episodes/'+episode.id" class="flex-1 pr-2 no-underline text-black">
                         <div>
-                            <div class="mb-1">{{ episode.title }}</div>
+                            <div class="mb-1" :class="{'line-through text-grey-darker': episode.completion !== null && episode.completion.completed}">{{ episode.title }}</div>
                             <div class="flex">
                                 <div class="mr-4">
                                     <svg class="align-bottom h-4 w-4 fill-current text-grey" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 9h2v2H9V7h2v2zm-5.82 6.08a6.98 6.98 0 0 1 0-10.16L6 0h8l.82 4.92a6.98 6.98 0 0 1 0 10.16L14 20H6l-.82-4.92zM10 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>
