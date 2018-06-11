@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <input class="p-2 border rounded-lg w-full" v-model="searchQuery" @keyup.enter="searchItunes" type="text" placeholder="Search" autocomplete="off">
+        <input class="p-2 border rounded-lg w-full" v-model="searchQuery" @keyup.enter="searchItunes" type="text" placeholder="Search..." autocomplete="off">
         
         <div class="absolute bg-white w-full border shadow mt-1 rounded-lg" v-show="searchResults.length > 0">
             <div v-for="(result, i) in searchResults" :key="i" class="px-4 mb-2 py-2 hover:bg-grey-lighter text-black flex justify-between overflow-hidden max-w-100">

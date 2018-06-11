@@ -6,7 +6,7 @@
 
         <div class="mb-4 max-w-md mx-auto">
             <div class="px-4">
-                <div class="border-b mb-4 text-xl pb-2">Best Podcasts</div>
+                <div class="border-b mb-4 text-xl pb-2">Most subscribers</div>
             </div>
             <div class="px-4">
                 <podcast-list-item class="mb-4" v-for="podcast in mostSubscribedPodcasts" :key="podcast.id" :podcast="podcast"></podcast-list-item>
@@ -15,14 +15,14 @@
 
         <div class="mb-6 max-w-md mx-auto">
             <div class="px-4">
-                <div class="border-b mb-4 text-xl pb-2">Podcasts</div>
+                <div class="border-b mb-4 text-xl pb-2">All</div>
             </div>
             <div class="flex flex-wrap">
                 <div v-for="podcast in allPodcasts" :key="podcast.id" class="px-4 py-2 w-1/3">
-                    <div>
+                    <router-link :to="'/podcasts/'+podcast.id" class="no-underline text-black">
                         <img class="w-full block rounded-lg shadow" :src="podcast.logo" :alt="podcast.title">
-                    </div>
-                    <div class="truncate">{{ podcast.title }}</div>
+                        <div class="truncate">{{ podcast.title }}</div>
+                    </router-link>
                 </div>
             </div>
         </div>
