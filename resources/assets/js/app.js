@@ -16,10 +16,7 @@ Vue.config.productionTip = false
 Vue.component('audio-player', require('./components/AudioPlayer'));
 Vue.component('navbar', require('./components/Navbar'));
 Vue.component('search', require('./components/Search'));
-Vue.component('episode-image', require('./components/EpisodeImage'));
-Vue.component('podcast-image', require('./components/PodcastImage'));
 Vue.component('podcast-list-item', require('./components/PodcastListItem'));
-Vue.component('episode-info', require('./components/EpisodeInfo'));
 
 Vue.mixin({
     methods: {
