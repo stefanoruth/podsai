@@ -11,9 +11,6 @@
 |
 */
 
-// Public
-Route::get('/', 'MainController@index')->name('login');
-
 // Auth
 Route::get('logout', 'AuthController@logout')->middleware('auth')->name('logout');
 Route::get('login', 'AuthController@redirectToProvider')->middleware('guest');
@@ -29,3 +26,6 @@ Route::middleware('auth')->prefix('api')->group(function () {
     Route::resource('episodes/latest', 'LatestEpisodeController')->only('index');
     Route::resource('users', 'UserController')->only('index');
 });
+
+// Public
+Route::get('{uri}', 'MainController@index')->name('login')->where('uri', '^(?:(?!api).*)');

@@ -1,15 +1,15 @@
 module.exports = [
     {
         path: '/',
-        component: require('./views/Home'),
+        component: require('./views/Catalog'),
     },
     {
         path: '/my-podcasts',
         component: require('./views/MyPodcasts'),
     },
     {
-        path: '/my-podcasts/episodes',
-        component: require('./views/MyEpisodes'),
+        path: '/playlist',
+        component: require('./views/Playlist'),
     },
     {
         path: '/podcasts',

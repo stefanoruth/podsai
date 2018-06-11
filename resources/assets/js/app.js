@@ -15,7 +15,7 @@ Vue.use(VueRouter);
 Vue.config.productionTip = false
 Vue.component('audio-player', require('./components/AudioPlayer'));
 Vue.component('navbar', require('./components/Navbar'));
-Vue.component('modal', require('./components/Modal'));
+Vue.component('search', require('./components/Search'));
 Vue.component('episode-image', require('./components/EpisodeImage'));
 Vue.component('podcast-image', require('./components/PodcastImage'));
 Vue.component('podcast-list-item', require('./components/PodcastListItem'));
@@ -47,12 +47,13 @@ if(document.getElementById('app')) {
     const app = new Vue({
         el: '#app',
         router: new VueRouter({
+            mode: 'history',
             routes: require('./routes.js'),
         }),
 
         mounted() {
 
-            axios.get('mix-manifest.json').then(res => {
+            axios.get('/mix-manifest.json').then(res => {
                 var version = res.data['/app.css'].split('?');
 
                 if (version.length == 2) {

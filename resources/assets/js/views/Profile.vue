@@ -1,30 +1,21 @@
-    <template>
-    <div v-if="user != null" class="px-4 py-8 max-w-2xl mx-auto md:flex">
-        <div class="flex justify-center md:block md:pr-8 md:w-1/4 mb-4">
-            <img class="h-32 w-32 md:h-auto md:w-full shadow-md" :src="user.avatar" :alt="user.name">
+<template>
+    <div v-if="user != null" class="px-4 py-8 max-w-md mx-auto">
+        <div class="flex bg-white shadow rounded-lg p-2 mb-4">
+            <div class="pr-2">
+                <img class="h-32 w-32 shadow rounded-lg" :src="user.avatar" :alt="user.name">
+            </div>
+            <div class="flex-1 p-2 flex flex-col justify-between">
+                <div>
+                    <div class="text-xl">{{ user.name }}</div>
+                    <div class="text-grey-darker">{{ user.email }}</div>
+                </div>
+                <div class="text-grey-darker">Member since: {{ user.joined }}</div>
+            </div>
         </div>
-        <div class="flex-1">
-            <div class="bg-white p-4 shadow mb-4">
-                <div class="text-3xl font-bold">{{ user.name }}</div>
-                <div class="text-sm mb-4">{{ user.email }}</div>
-                <div class="text-sm">Member since: {{ user.joined }}</div>
-            </div>
-
-            <div class="bg-white p-4 shadow mb-4">
-                <div class="font-bold text-xl">Episodes Completed Per Week</div>
-                <canvas ref="episodeChart" class="py-4"></canvas>
-            </div>
-
-            <div class="bg-white p-4 shadow">
-                <div class="font-bold text-xl mb-2">Subscriptions</div>
-                <ul class="list-reset">
-                    <li v-for="podcast in user.subscriptions" :key="podcast.id" class="mb-1">
-                        <router-link class="no-underline text-orange block hover:text-orange-dark hover:underline" :to="{name:'podcasts.show', params:{id:podcast.id}}">
-                            <div>{{ podcast.title }}</div>
-                        </router-link>
-                    </li>
-                </ul>
-            </div>
+        
+        <div class="shadow rounded-lg p-2 bg-white">
+            <div class="p-2">Episodes Completed Per Week</div>
+            <canvas ref="episodeChart" class=""></canvas>
         </div>
     </div>
 </template>
@@ -58,7 +49,7 @@
                             datasets: [{
                                 data: _.map(this.user.last_episodes, 'count'),
                                 fill: false,
-                                borderColor: '#f6993f',
+                                borderColor: '#9561e2',
                                 lineTension: 0.1,
                             }]
                         },

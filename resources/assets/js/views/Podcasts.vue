@@ -33,9 +33,5 @@
                 this.podcasts = response.data.data;
             });
         },
-
-        components: {
-            'new-podcast': require('../components/NewPodcast'),
-        },
     }
 </script>
