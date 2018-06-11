@@ -19,7 +19,6 @@ class EpisodeResource extends Resource
             'title'             => $this->title,
             'audio'             => $this->audio,
             'link'              => data_get($this->meta, 'link'),
-            'description'       => data_get($this->meta, 'description'),
             'published_at'      => optional($this->published_at)->format('d. M Y'),
             'season'            => $this->transform(data_get($this->meta, 'season'), function ($value) {
                 return (int) $value;
@@ -28,7 +27,7 @@ class EpisodeResource extends Resource
                 return (int) $value;
             }),
             'length'            => $this->duration,
-            'show_notes'        => data_get($this->meta, 'show_notes'),
+            'show_notes'        => data_get($this->meta, 'show_notes') ?? nl2br(data_get($this->meta, 'description')),
             'podcast'           => PodcastResource::make($this->whenLoaded('podcast')),
             'completion'        => EpisodeCompletionResource::make($this->whenLoaded('userCompletion')),
         ];
