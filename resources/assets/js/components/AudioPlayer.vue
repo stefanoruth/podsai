@@ -18,7 +18,7 @@
             </div>
         </div>
         
-        <div class="fixed pin bg-white" :class="{hidden: mini}">
+        <div class="fixed pin bg-white z-40" :class="{hidden: mini}">
             <div class="max-w-md mx-auto p-4">
                 <div class="flex mb-4">
                     <div class="flex-1">
