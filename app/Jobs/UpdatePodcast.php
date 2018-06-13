@@ -69,7 +69,7 @@ class UpdatePodcast implements ShouldQueue
         $itunes = $feed->channel->children('http://www.itunes.com/dtds/podcast-1.0.dtd');
 
         $title = $this->formatInput($feed->channel->title);
-        $oldAvatar = $this->podcast->meta->avatar;
+        $oldAvatar = $this->podcast->meta->avatar ?? null;
         $avatar = $this->formatInput($itunes->image->attributes()['href'] ?? $feed->channel->image->url);
         $url = parse_url($avatar);
 
