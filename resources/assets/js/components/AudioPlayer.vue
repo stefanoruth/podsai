@@ -60,17 +60,17 @@
                 </div>
 
                 <div class="flex items-center text-sm font-light">
-                    <div class="pr-2">    
+                    <div class="pr-2 inline-flex">    
                         <svg class="w-4 h-4 fill-current text-grey" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M7 7H3v6h4l5 5V2L7 7zm8.54 6.54l-1.42-1.42a3 3 0 0 0 0-4.24l1.42-1.42a4.98 4.98 0 0 1 0 7.08z"/></svg>
                     </div>
                     <div class="flex-1">
                         <div class="h-1 w-full cursor-pointer relative bg-grey-light" id="volume-bar" @click="setVolume">
                             <div class="bg-purple h-full pin-t pin-l absolute" :style="{width: barVolume}">
-                                <div class="absolute h-4 w-4 rounded-full bg-white shadow" style="top: -0.5rem;right: -0.5rem;"></div>
+                                <div class="absolute h-4 w-4 rounded-full bg-white shadow" style="top: -0.4rem;right: -0.5rem;"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="pl-2">           
+                    <div class="pl-2 inline-flex">           
                         <svg class="w-4 h-4 fill-current text-grey" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 7H1v6h4l5 5V2L5 7zm11.36 9.36l-1.41-1.41a6.98 6.98 0 0 0 0-9.9l1.41-1.41a8.97 8.97 0 0 1 0 12.72zm-2.82-2.82l-1.42-1.42a3 3 0 0 0 0-4.24l1.42-1.42a4.98 4.98 0 0 1 0 7.08z"/></svg>
                     </div>
                 </div>
