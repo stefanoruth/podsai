@@ -246,6 +246,11 @@
                 window.addEventListener('beforeunload', () => {
                     this.saveDuration();
                 });
+                
+                // Adding event to try to catch more cases on Android
+                window.addEventListener('unload', () => {
+                    this.saveDuration();
+                });
 
                 EventBus.$on('playEpisode', (episode) => {
                     if (this.episode && this.episode.id == episode.id) {
