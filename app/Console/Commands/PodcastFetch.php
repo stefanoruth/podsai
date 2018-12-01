@@ -24,7 +24,7 @@ class PodcastFetch extends Command
     {
         Podcast::when($this->option('id'), function ($query) {
             $query->where('id', $this->option('id'));
-        })->get()->when(true, function ($podcasts) {
+        })->whereNull('disabled_at')->get()->when(true, function ($podcasts) {
             $this->bar = $this->output->createProgressBar($podcasts->count());
 
             return $podcasts;
